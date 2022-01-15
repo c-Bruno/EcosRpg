@@ -86,7 +86,7 @@ function Portrait({
           return character.injured_character_picture_url;
         }
       } else {
-        return `/assets/user.png`
+        return `/assets/character.png`
       }
     }
 

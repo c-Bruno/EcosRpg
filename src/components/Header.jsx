@@ -14,14 +14,11 @@ const Header = ({
             item
             xs={12}
             justifyContent="center"
-            style={{ textAlign: 'center', marginTop: 50 }}
+            style={{ 
+                textAlign: 'center',
+                fontFamily: 'Lacquer, cursive'
+             }}
         >
-            <Image
-                src="/assets/logo.svg"
-                alt="Open Source RPG"
-                width="150"
-                height="55"
-            />
             <h1
                 className={classes.title}
             >
@@ -34,7 +31,7 @@ const Header = ({
 const styles = theme => ({
     title: {
         color: '#FFFFFF',
-        marginTop: 60,
+        marginTop: 40,
     }
 });
 

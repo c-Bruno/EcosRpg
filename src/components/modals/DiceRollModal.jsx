@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { withStyles } from '@mui/styles';
+import Image from 'next/image';
 import {
     TextField, Dialog, DialogActions, DialogContent, DialogContentText,
     DialogTitle, Button, Grid, Select, MenuItem, FormControl, InputLabel
@@ -8,7 +9,10 @@ import {
 import { api } from '../../utils'
 
 const styles = theme => ({
-
+    dice: {
+        transition: 'rotate(360deg)',
+        transform: 'rotate(360deg)'    
+    }
 })
 
 function DiceRollModal({
@@ -25,45 +29,74 @@ function DiceRollModal({
 
     const [result, setResult] = useState(null);
 
-    const rollDice = () => {
-        setButtonDisabled(true);
+    // const rollDice = () => {
+    //     setButtonDisabled(true);
 
-        if(!timesToRoll || !facesNumber) {
-            return window.alert('É necessário escolher todos os campos!');
+    //     if(!timesToRoll || !facesNumber) {
+    //         return window.alert('É necessário escolher todos os campos!');
+    //     }
+
+    //     if(timesToRoll < 1) {
+    //         return window.alert('O número de dados precisa ser maior que 1.');
+    //     }
+
+    //     api.post('roll', {
+    //         character_id: characterId,
+    //         max_number: facesNumber,
+    //         times: timesToRoll
+    //     })
+    //     .then(res => {
+    //         setResult(res.data);
+
+    //         setButtonDisabled(false);
+
+    //         onDiceRoll(res.data);
+    //     })
+    //     .catch(err => {
+    //         console.log(err);
+    //     });
+    // }
+
+    function rollDamage(amount) {            
+        setTimeout(() => {
+          const diceNumber = rollDice(amount)
+          console.log(diceNumber)
+        //   $('#diceNumber').text(diceNumber)
+      
+        //   setTimeout(() => {
+        //     diceModal.css('display', 'none')
+        //     $('#diceNumber').text('')
+        //     $('#diceType').text('')
+      
+        //     $('.modalDice').css('transform', 'rotate(0deg)')
+        //     $('.modalDice').css('-webkit-transform', 'rotate(0deg)')
+        //   }, 20000)
+        }, 2000)
+      }
+
+    // Rolador de dados
+    function rollDice(dice) {
+        let [count, max] = dice.split('d')
+
+        if (Number(count) && Number(max)) {
+            count = Number(count) // Verifica quantas vezes vai rolar o dado
+            max = Number(max) // Verifica qual o tipo de dado
+
+            let total = 0
+
+            for (let i = 0; i < count; i++) { 
+            total += Math.floor(Math.random() * max + 1) // Sorteia um numero entre 1 e o valor do atributo
+            }
+
+            return total
+        } else {
+            return null
         }
-
-        if(timesToRoll < 1) {
-            return window.alert('O número de dados precisa ser maior que 1.');
-        }
-
-        api.post('roll', {
-            character_id: characterId,
-            max_number: facesNumber,
-            times: timesToRoll
-        })
-        .then(res => {
-            setResult(res.data);
-
-            setButtonDisabled(false);
-
-            onDiceRoll(res.data);
-        })
-        .catch(err => {
-            console.log(err);
-        });
     }
 
     return (
-        <Dialog
-            open={true}
-            onClose={handleClose}
-            fullWidth
-            maxWidth="sm"
-        >
-            <DialogTitle>
-                {result ? 'Resultado da Rolagem' : 'Rolar Dados'}
-            </DialogTitle>
-            <DialogContent>
+        <Dialog open={true} onClose={handleClose} fullWidth maxWidth="sm">
+            <DialogContent onLoad={rollDamage('1d100')}>
                 {
                     result ? (
                         <Grid container spacing={2}>
@@ -100,9 +133,13 @@ function DiceRollModal({
                     ) : (
                         <Grid container spacing={2}>
                             <Grid item xs={12}>
-                                <DialogContentText>
-                                    Selecione o número de dados que você deseja rolar ao <strong>mesmo tempo</strong> e o número de faces.
-                                </DialogContentText>
+                            <Image
+                                src={'/assets/dice.png'}
+                                alt="Dice roll"
+                                className={classes.dice}
+                                width={30}
+                                height={30}
+                            />
                             </Grid>
 
                             <Grid item xs={6}>
@@ -163,7 +200,7 @@ function DiceRollModal({
                 </Button>
                     <Button
                         onClick={() => {
-                            return result ? setResult(null) : rollDice()
+                            return rollDamage('1d100')
                         }}
                         disabled={buttonDisabled}
                     >

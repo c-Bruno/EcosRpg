@@ -175,7 +175,7 @@ function Dashboard({
     <>
       <Container maxWidth="lg" style={{ marginBottom: '30px' }}>
         <Head>
-          <title>Dashboard do Mestre | RPG</title>
+          <title>Mestre | RPG</title>
         </Head>
 
         <Grid container item spacing={3}>

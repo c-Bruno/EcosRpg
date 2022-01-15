@@ -1,6 +1,6 @@
 datasource db {
   provider = "mysql"
-  url      = env("DB_PROVIDER_URL")
+  url      = "mysql://qjnl04k7l5sgcf4r:dyukg2xvzswncqvf@l6glqt8gsx37y4hs.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/z3r866ualzkfaexx"
 }
 
 generator client {
@@ -10,11 +10,19 @@ generator client {
 model Character {
   id Int @id @default(autoincrement())
   name String
-  age Int?
+  age Int? 
   gender String?
   player_name String?
+  weight String?
+  occupation String?
+  birth String?
+  birthplace String?
+  fear String?
+  background String?
   current_hit_points Int @default(0)
   max_hit_points Int @default(0)
+  current_sanity_points Int @default(0)
+  max_sanity_points Int @default(0)
   current_picture Int @default(1)
   is_dead Boolean @default(false)
   standard_character_picture_url String?

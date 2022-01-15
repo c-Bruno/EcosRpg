@@ -3,7 +3,7 @@ import Head from 'next/head';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 
-import { Grid, Container, Button } from '@mui/material';
+import { Grid, Container, Button, TextField } from '@mui/material';
 import { withStyles } from '@mui/styles';
 
 import { api } from '../../utils';
@@ -11,8 +11,7 @@ import { api } from '../../utils';
 import socket from '../../utils/socket';
 
 import {
-  Header, Section, StatusBar, SheetEditableRow, 
-
+  Header, Section, StatusBar, SheetEditableRow,
   DiceRollModal, StatusBarModal, ChangePictureModal
 } from '../../components';
 
@@ -94,6 +93,7 @@ function Sheet({
     });
   }
 
+  // Atualiza(update) o valor de VIDA no banco
   const onHitPointsModalSubmit = async newData => {
     return new Promise((resolve, reject) => {
       const data = {
@@ -118,6 +118,31 @@ function Sheet({
     });
   }
 
+  // Atualiza(update) o valor de SANIDADE no banco
+  const onSanityPointsModalSubmit = async newData => {
+    return new Promise((resolve, reject) => {
+      const data = {
+        current_sanity_points: Number(newData.current),
+        max_sanity_points: Number(newData.max)
+      }
+
+      api
+        .put(`/character/${character.id}`, data)
+        .then(() => {
+          updateCharacterState(data);
+
+          resolve();
+
+          socket.emit('update_hit_points', { character_id: character.id, current: data.current_sanity_points, max: data.max_sanity_points });
+        })
+        .catch(err => {
+          alert(`Erro ao atualizar a sanidade!`, err);
+
+          reject();
+        });
+    });
+  }
+  
   useEffect(() => {
     setCharacter(rawCharacter);
   }, [rawCharacter]);
@@ -129,6 +154,7 @@ function Sheet({
     }));
   }
 
+  // Modal de vida
   const hitPointsModal = useModal(({ close }) => (
     <StatusBarModal
       type="hp"
@@ -139,6 +165,21 @@ function Sheet({
       data={{
         current: character.current_hit_points,
         max: character.max_hit_points
+      }}
+    />
+  ));
+
+  // Modal de Sanidade
+  const sanityPointsModal = useModal(({ close }) => (
+    <StatusBarModal
+      type="sn"
+      onSubmit={async newData => {
+        onSanityPointsModalSubmit(newData).then(() => close());
+      }}
+      handleClose={close}
+      data={{
+        current: character.current_sanity_points,
+        max: character.max_sanity_points
       }}
     />
   ));
@@ -214,7 +255,7 @@ function Sheet({
         return character.injured_character_picture_url;
       }
     } else {
-      return `/assets/user.png`
+      return `/assets/character.png`
     }
   }
 
@@ -225,20 +266,101 @@ function Sheet({
   }
 
   return (
-    <Container maxWidth="lg" style={{ marginBottom: '30px' }}>
+    <Container style={{ marginBottom: '30px', maxWidth:'90%' }}>
         <Head>
-          <title>Ficha de {character.name} | RPG</title>
+          <title>{character.name}</title>
         </Head>
 
         <Grid container item spacing={3}>
-          <Header title={`Ficha de ${character.name}`} />
+          <Header title={`${character.name}`} />
 
           <Grid container item xs={12} spacing={3}>
-            <Grid item xs={12} md={6}>
-              <Section
-                title="Detalhes pessoais"
-              >
-                <Grid container item xs={12} spacing={3}>
+            {/* Grid de imagem, vida e sanidade de personagem */}
+            <Grid item xs={12} md={4}>
+              <Section>
+                <Grid container item spacing={3} className={classes.alignCenter}>
+                  {/* Imagem do personagem */}
+                  <Grid item xs={6} className={classes.alignCenter}>
+                    <Image
+                      src={getCharacterPictureURL()}
+                      alt="Imagem de jogador"
+                      className={classes.characterImage}
+                      width={122}
+                      height={122}
+                      onClick={() => changePictureModal.appear()}
+                    />
+                  </Grid>
+
+                  {/* Vida do personagem*/}
+                  <Grid item xs={12} className={classes.alignCenter}>
+                    <Grid container item xs={12} className={classes.bar}>
+                      <Grid item xs={12} className={classes.barTitle}>
+                        <span>Vida</span>
+                      </Grid>
+                      <Grid item xs={12}>
+                        <StatusBar
+                          current={character.current_hit_points} // Vida Atual
+                          max={character.max_hit_points} // Vida Total
+                          label={`${character.current_hit_points}/${character.max_hit_points}`}
+                          primaryColor={`${'#640101'}`}
+                          secondaryColor="#1b1517"
+                          onClick={() => {
+                            hitPointsModal.appear();
+                          }}
+                        />
+                      </Grid>                      
+                    </Grid>
+                    
+                  </Grid>
+
+                  {/* Sanidade do personagem*/}
+                  <Grid item xs={12} className={classes.alignCenter}>
+                    <Grid container item xs={12} className={classes.bar}>
+                      <Grid item xs={12} className={classes.barTitle}>
+                        <span>Sanidade</span>
+                      </Grid>
+                      <Grid item xs={12}>
+                        <StatusBar
+                          current={character.current_sanity_points} // Sanidade Atual
+                          max={character.max_sanity_points} // Sanidade Total
+                          label={`${character.current_sanity_points}/${character.max_sanity_points}`}
+                          primaryColor={`${'#011B64'}`}
+                          secondaryColor="#1b1517"
+                          onClick={() => {
+                            sanityPointsModal.appear();
+                          }}
+                        />
+                      </Grid>                      
+                    </Grid>
+                  </Grid>
+
+                  {/* Dado para rolagem d100 */}
+                  <Grid item xs={6} className={classes.alignCenter}>
+                    <Image
+                      src={'/assets/dice.png'}
+                      alt="Dice roll"
+                      className={classes.dice}
+                      width={80}
+                      height={80}
+
+                      onClick={() => diceRollModal.appear()}
+                    />
+                    {/* <Button
+                      variant="contained"
+                      onClick={() => diceRollModal.appear()}
+                    >
+                      ROLAR DADOS
+                    </Button> */}
+                  </Grid>
+
+                </Grid>
+              </Section>
+            </Grid>
+
+            {/* Grid contendo todos os dados pessoais do personagem */}
+            <Grid item xs={12} md={8}>
+              <Section title="Ficha de personagem">
+                <Grid container item xs={12}>
                   <Grid item xs={12}>
                     <CharacterInfoForm
                       initialValues={character}
@@ -248,58 +370,21 @@ function Sheet({
                 </Grid>
               </Section>
             </Grid>
-            <Grid item xs={12} md={6}>
-              <Section>
-                <Grid container item xs={12} spacing={3}>
-                  <Grid item xs={6} className={classes.alignCenter}>
-                    <Image
-                      src={getCharacterPictureURL()}
-                      alt="Character Portrait"
-                      className={classes.characterImage}
-                      width={140}
-                      height={200}
-                      onClick={() => changePictureModal.appear()}
-                    />
-                  </Grid>
-                  <Grid item xs={6} className={classes.alignCenter}>
-                    <Button
-                      variant="contained"
-                      onClick={() => diceRollModal.appear()}
-                    >
-                      ROLAR DADOS
-                    </Button>
-                  </Grid>
-                  <Grid item xs={12} className={classes.alignCenter}>
-                    <Grid container item xs={12} className={classes.bar}>
-                      <Grid item xs={12} className={classes.barTitle}>
-                        <span>Vida</span>
-                      </Grid>
-                      <Grid item xs={12}>
-                        <StatusBar
-                          current={character.current_hit_points}
-                          max={character.max_hit_points}
-                          label={`${character.current_hit_points}/${character.max_hit_points}`}
-                          primaryColor="#E80A67"
-                          secondaryColor="#4d0321"
-                          onClick={() => {
-                            hitPointsModal.appear();
-                          }}
-                        />
-                      </Grid>
-                    </Grid>
-                  </Grid>
-                </Grid>
+
+            {/* Inventario */}
+            <Grid item xs={12} md={4}>
+              <Section title="Inventário   " image="/assets/Inventory.png">
               </Section>
             </Grid>
-            <Grid item xs={12} md={6}>
-              <Section
-                title="Atributos"
-              >
-                <Grid container item xs={12} spacing={3}>
+
+            {/* Atributos de habilidade */}
+            <Grid item xs={12} md={8}>
+              <Section title="Atributos   " image="/assets/atributes.png">
+                <Grid container item xs={12} spacing={3} style={{display: 'flex', flexFlow: 'row wap', justifyContent: 'center'}}>
                   {
                     character.attributes.map((each, index) => (
-                      <Grid item xs={6} key={index}>
-                        <SheetEditableRow
+                      <Grid item xs={2} key={index}>
+                        <SheetEditableRow image="/assets/dice.png"
                           data={{
                             name: each.attribute.name,
                             value: each.value,
@@ -325,15 +410,37 @@ function Sheet({
                 </Grid>
               </Section>
             </Grid>
+
+            {/* Combate */}
             <Grid item xs={12}>
-              <Section
-                title="Perícias"
-              >
-                <Grid container item xs={12} spacing={3}>
+              <Section title="Combate   " image="/assets/slash.png">
+
+              </Section>
+            </Grid>
+            
+            {/* Item especial */}
+            <Grid item xs={12} md={4}>
+              <Section title="Item especial   " image="/assets/specialItem.png">
+              <Grid item xs={12}>
+                    <TextField
+                        variant="standard"
+                        multiline
+                        rows={6}
+                        name="specialItem"
+                        fullWidth
+                    />
+                </Grid>
+              </Section>
+            </Grid>
+
+            {/* Pericias */}
+            <Grid item xs={8}>
+              <Section title="Perícias   " image="/assets/expertise.png">
+                <Grid container item xs={12} spacing={3} style={{display: 'flex', flexFlow: 'row wap', justifyContent: 'center'}}>
                   {
                     character.skills.map((each, index) => (
-                      <Grid item xs={4} key={index}>
-                        <SheetEditableRow
+                      <Grid item xs={2} key={index}>
+                        <SheetEditableRow image="/assets/expertiseRoll.png"
                           data={{
                             name: each.skill.name,
                             value: each.value,
@@ -379,16 +486,27 @@ const styles = (theme) => ({
   },
 
   bar: {
-    marginBottom: '15px'
+    marginBottom: '2px'
   },
 
   barTitle: {
-    marginBottom: '10px',
+    marginBottom: '2px',
     color: theme.palette.secondary.main,
-    textTransform: 'uppercase',
-    fontSize: '18px',
+    // textTransform: 'uppercase',
+    fontSize: '15px',
     fontWeight: 'bold'
-  }
+  },
+
+  dice: {
+    cursor: 'pointer',
+    transition: '-webkit-transform .8s ease-in-out',
+    transform: 'transform .8s ease-in-out',
+
+    "&:hover":{
+      transition: 'rotate(360deg)',
+      transform: 'rotate(360deg)'
+    }
+  },
 });
 
 export default withStyles(styles)(Sheet);

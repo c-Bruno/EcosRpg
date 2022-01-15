@@ -14,7 +14,7 @@ export default function Home() {
         <title>Home</title>
       </Head>
 
-      <h1>Redirecionando...</h1>
+      <h1>Carregando...</h1>
     </div>
   )
 }

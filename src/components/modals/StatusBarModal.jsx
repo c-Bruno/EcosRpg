@@ -50,13 +50,15 @@ function StatusBarModal({
 
     const getTitle = () => {
         switch (type) {
-            case 'hp': return 'Alterar pontos de vida';
-            default: return 'Alterar pontos';
+            case 'hp': return 'Modicador de Vida';
+            case 'sn': return 'Modificador de Sanidade'
+            default: return 'Modificador de Pontos';
         }
     }
 
     return (
         <Dialog
+            maxWidth={false}
             open={true}
             onClose={handleClose}
         >
@@ -65,6 +67,7 @@ function StatusBarModal({
             </DialogTitle>
             <DialogContent>
                 <Grid container spacing={3}>
+                    {/* Valor atual */}
                     <Grid item xs={12}>
                         <TextField
                             style={{
@@ -89,6 +92,8 @@ function StatusBarModal({
                             spellCheck={false}
                         />
                     </Grid>
+
+                    {/* Valor maximo */}
                     <Grid item xs={12}>
                         <TextField
                             style={{
@@ -115,6 +120,8 @@ function StatusBarModal({
                     </Grid>
                 </Grid>
             </DialogContent>
+
+            {/* Botões */}
             <DialogActions>
                 <Button
                     onClick={handleClose}

@@ -73,7 +73,7 @@ function CharacterBox({ classes, character, deleteCharacter, ...rest }) {
         return character.injured_character_picture_url;
       }
     } else {
-      return `/assets/user.png`
+      return `/assets/character.png`
     }
   }
 
@@ -91,10 +91,12 @@ function CharacterBox({ classes, character, deleteCharacter, ...rest }) {
         alt="Character Portrait"
         className={classes.characterImage}
         width={70}
-        height={100}
+        height={70}
       />
       <div className={classes.mainInformations}>
+        {/* Nome do personagem */}
         <span className={classes.characterName}>{character.name} (ID: {character.id})</span>
+        {/* Vida resumida */}
         <div
           style={{
             display: 'flex',
