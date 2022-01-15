@@ -89,13 +89,8 @@ function ChangePictureModal({
             <DialogContent>
                 <Grid container>
                     <Grid item xs={12}>
-                        <p>
-                            As artes dos personagens devem estar <strong>obrigatoriamente</strong> no tamanho <strong>420x600</strong> e em formato <strong>PNG</strong>.
-                        </p>
-
-                        <p>
-                            Apenas são aceitos links de imagens upadas no site <Link href="https://imgur.com/" target="_blank">Imgur</Link> ou no Discord.
-                        </p>
+                        <p> Se posssivel utilize imagens de tamanho <strong>420x600</strong> e em formato <strong>PNG</strong>.
+                         Apenas são aceitos links de imagens upadas no site <Link href="https://imgur.com/" target="_blank">Imgur</Link> ou no Discord.</p>
                     </Grid>
                     <Grid item xs={12}>
                         <TextField

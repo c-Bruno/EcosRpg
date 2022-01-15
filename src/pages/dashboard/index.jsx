@@ -186,7 +186,7 @@ function Dashboard({
               <>
                 <Grid item xs={12}>
                   <Section
-                    title="Fichas e personagens"
+                    title="Fichas de personagens"
                   >
                     <Grid item container xs={12} spacing={3}>
                       {characters.map((character, index) => (
@@ -210,6 +210,7 @@ function Dashboard({
                   </Section>
                 </Grid>
 
+                {/* Lista de ATRIBUTOS adicionadas e opção para adicionar */}
                 <Grid item xs={12} md={6}>
                   <Section
                     title="Atributos"
@@ -254,6 +255,7 @@ function Dashboard({
                   </Section>
                 </Grid>
 
+                {/* Lista de PERICIAS adicionadas e opção para adicionar */}
                 <Grid item xs={12} md={6}>
                   <Section
                     title="Perícias"
@@ -298,6 +300,7 @@ function Dashboard({
                   </Section>
                 </Grid>
 
+                {/* Configurações */}
                 <Grid item xs={12}>
                   <Section
                     title="Configurações"

@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import { Add as AddIcon } from '@mui/icons-material';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Switch from '@mui/material/Switch';
 
 import { Grid, Container, Button, TextField } from '@mui/material';
 import { withStyles } from '@mui/styles';
@@ -210,9 +213,9 @@ function Sheet({
     />
   ));
 
+  // Atualiza o valor do atributo ao digitar 
   const updateCharacterAttributeValue = (attribute, value) => {
     const index = character.attributes.findIndex(a => a.attribute_id === attribute.attribute_id);
-
     const newArray = character.attributes;
 
     newArray[index] = {
@@ -226,9 +229,9 @@ function Sheet({
     }));
   }
 
+  // Atualiza o valor da pericia ao digitar 
   const updateCharacterSkillValue = (skill, value) => {
     const index = character.skills.findIndex(s => s.skill_id === skill.skill_id);
-
     const newArray = character.skills;
 
     newArray[index] = {
@@ -241,6 +244,21 @@ function Sheet({
       skills: newArray
     }));
   }
+
+  var temporiza;
+  // Atualiza o valor do item especial ao digitar
+  const updateCharacterSpecialItem = (value) => {
+    clearTimeout(temporiza);
+    // Temporizador para que o usuario só seja salvo após 3 segundos sem digitar nada no campo
+    temporiza = setTimeout(function(){
+      console.log(value.target.value)
+      api.put(`/character/${character.id}`, {specialItem: value.target.value})
+        .then(() => {})
+        .catch(() => { alert(`Erro ao atualizar o item especial!`);
+      });
+   }, 5000);
+  }
+
 
   const getCharacterPictureURL = () => {
     if(!character) {
@@ -334,6 +352,11 @@ function Sheet({
                     </Grid>
                   </Grid>
 
+                  <Grid item xs={12} className={classes.alignCenter}>
+                    <FormControlLabel control={<Switch color="secondary"/>} label="Traumatizado" />
+                    <FormControlLabel control={<Switch color="secondary"/>} label="Morrendo" />
+                  </Grid>
+
                   {/* Dado para rolagem d100 */}
                   <Grid item xs={6} className={classes.alignCenter}>
                     <Image
@@ -413,7 +436,19 @@ function Sheet({
 
             {/* Combate */}
             <Grid item xs={12}>
-              <Section title="Combate   " image="/assets/slash.png">
+              <Section title="Combate   " image="/assets/slash.png"
+                renderButton={() => (
+                <Button
+                  variant="outlined"
+                  style={{
+                    display: 'flex',
+                    alignSelf: 'center',
+                  }}
+                  onClick={() => attributeModal.appear({ operation: 'create' })}
+                >
+                  <AddIcon />
+                </Button>
+              )}>
 
               </Section>
             </Grid>
@@ -421,14 +456,19 @@ function Sheet({
             {/* Item especial */}
             <Grid item xs={12} md={4}>
               <Section title="Item especial   " image="/assets/specialItem.png">
-              <Grid item xs={12}>
-                    <TextField
-                        variant="standard"
-                        multiline
-                        rows={6}
-                        name="specialItem"
-                        fullWidth
-                    />
+                <Grid item xs={12}>
+                  <TextField
+                      variant="standard"
+                      multiline
+                      rows={6}
+                      name="specialItem"
+                      fullWidth
+
+                      defaultValue={character.specialItem}
+                      onKeyUp={newValue => {
+                        updateCharacterSpecialItem(newValue);
+                      }}
+                  />
                 </Grid>
               </Section>
             </Grid>

@@ -1,6 +1,6 @@
 datasource db {
   provider = "mysql"
-  url      = "mysql://qjnl04k7l5sgcf4r:dyukg2xvzswncqvf@l6glqt8gsx37y4hs.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/z3r866ualzkfaexx"
+  url      = env("DB_PROVIDER_URL")
 }
 
 generator client {
@@ -25,16 +25,41 @@ model Character {
   max_sanity_points Int @default(0)
   current_picture Int @default(1)
   is_dead Boolean @default(false)
+  is_creazy Boolean @default(false)
   standard_character_picture_url String?
   injured_character_picture_url String?
+  specialItem String?
 
   created_at DateTime @default(now())
 
   attributes CharacterAttributes[]
+  inventory CharacterInventory[]
   skills CharacterSkills[]
   rolls Roll[]
   
   @@map("character")
+}
+
+model CharacterInventory {
+  character Character @relation(fields: [character_id], references: [id])
+  character_id Int
+  inventory Inventory @relation(fields: [inventory_id], references: [id])
+  inventory_id Int
+
+  value String?
+
+  @@id([character_id, inventory_id])
+  @@map("character_inventory")
+} 
+
+model Inventory {
+  id Int @id @default(autoincrement())
+  description String?
+  weight Float? @default(0.00)
+
+  characters CharacterInventory[]
+  
+  @@map("inventory")
 }
 
 model CharacterAttributes {
@@ -46,7 +71,6 @@ model CharacterAttributes {
   value String?
 
   @@id([character_id, attribute_id])
-
   @@map("character_attributes")
 }
 

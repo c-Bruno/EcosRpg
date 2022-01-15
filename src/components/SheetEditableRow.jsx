@@ -79,7 +79,7 @@ const SheetEditableRow = ({
                     <Image
                         src={image}
                         alt="Dice roll"
-                        className={[classes.dice, classes.marginAuto].join(" ")}
+                        className={[classes.dice].join(" ")}
                         width={40}
                         height={40}
 
