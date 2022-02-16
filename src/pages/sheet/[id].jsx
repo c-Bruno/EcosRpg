@@ -14,8 +14,8 @@ import { api } from '../../utils';
 import socket from '../../utils/socket';
 
 import {
-  Header, Section, StatusBar, SheetEditableRow,
-  DiceRollModal, StatusBarModal, ChangePictureModal
+  Header, Section, StatusBar, SheetEditableRow, EditableRow, ConfirmationModal,
+  DiceRollModal, StatusBarModal, ChangePictureModal, InventoryModal
 } from '../../components';
 
 import {
@@ -37,6 +37,7 @@ export const getServerSideProps = async ({ params }) => {
     }
   }
 
+  // Recupera o personagem no banco
   const character = await prisma.character.findUnique({
     where: {
       id: characterId
@@ -51,10 +52,16 @@ export const getServerSideProps = async ({ params }) => {
             include: {
                 skill: true
             }
+        },
+        inventory: {
+          include: {
+            inventory: true
+          }
         }
     }
   });
 
+  // Se não tiver, seta como null para notificar que não existe
   if(!character) {
     return {
       props: {
@@ -157,6 +164,28 @@ function Sheet({
     }));
   }
 
+  // Modal de confirmação
+  const confirmationModal = useModal(({ close, custom }) => (
+    <ConfirmationModal
+      title={custom.title}
+      text={custom.text}
+      data={custom.data}
+      handleClose={close}
+      onConfirmation={(data) => {
+        const { id, type } = data;
+
+        api
+          .delete(`/${type}/${id}`)
+          .then(() => {
+            refreshData();
+          })
+          .catch(() => {
+            alert(`Erro ao apagar: ${type}`);
+          });
+      }}
+    />
+  ));
+
   // Modal de vida
   const hitPointsModal = useModal(({ close }) => (
     <StatusBarModal
@@ -205,11 +234,25 @@ function Sheet({
     />
   ));
 
+  // Alterar foto de personagem
   const changePictureModal = useModal(({ close }) => (
     <ChangePictureModal
       onPictureChange={() => refreshData()}
       handleClose={close}
       character={character}
+    />
+  ));
+
+  // Aciona o modal de inventario
+  const inventoryModal = useModal(({ close, custom }) => (
+    <InventoryModal
+      handleClose={close}
+      data={custom.data || null}
+      character={custom.character || custom.data.character_id}
+      onSubmit={() => {
+        refreshData();
+      }}
+      operation={custom.operation}
     />
   ));
 
@@ -259,7 +302,7 @@ function Sheet({
    }, 5000);
   }
 
-
+  // Encontra no banco a imagem atual
   const getCharacterPictureURL = () => {
     if(!character) {
       return null;
@@ -396,7 +439,43 @@ function Sheet({
 
             {/* Inventario */}
             <Grid item xs={12} md={4}>
-              <Section title="Inventário   " image="/assets/Inventory.png">
+              <Section title="Inventário   " image="/assets/Inventory.png" 
+                renderButton={() => (
+                  <Button
+                    variant="outlined"
+                    style={{
+                      display: 'flex',
+                      alignSelf: 'center',
+                    }}
+                    // Botão para criar novo item
+                    onClick={() => inventoryModal.appear({ operation: 'create', character: character.id })}
+                  >
+                    <AddIcon />
+                  </Button>
+                )}>
+
+                {/* Mapeia cada item disponivel para este personagem */}
+                <Grid item container xs={12} spacing={2} className={classes.scrollableBox}>
+                  {character.inventory.map((inventory, index) => (
+                    <Grid item xs={12} key={index}>
+                      <EditableRow
+                        data={inventory}
+                        // Atualizar informação do item do inventario
+                        editRow={(data) => {
+                          inventoryModal.appear({ operation: 'edit', data });
+                        }}
+                        // Deletar item do inventario
+                        deleteRow={(data) => {
+                          confirmationModal.appear({
+                            title: 'Apagar Item do inventário',
+                            text: 'Deseja apagar este item?',
+                            data: { id: data.inventory.id, type: 'inventory' },
+                          });
+                        }}
+                      />
+                    </Grid>
+                  ))}
+                </Grid>
               </Section>
             </Grid>
 

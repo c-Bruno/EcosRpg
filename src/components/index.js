@@ -6,6 +6,7 @@ import AddBox from './AddBox'
 import CreateCharacterModal from './modals/CreateCharacterModal'
 import ConfirmationModal from './modals/ConfirmationModal'
 import AttributeModal from './modals/AttributeModal'
+import InventoryModal from './modals/InventoryModal'
 import SkillModal from './modals/SkillModal'
 import StatusBarModal from './modals/StatusBarModal'
 import InfoModal from './modals/InfoModal'
@@ -31,6 +32,7 @@ export {
     CreateCharacterModal,
     ConfirmationModal,
     AttributeModal,
+    InventoryModal,
     SkillModal,
     StatusBarModal,
     InfoModal,

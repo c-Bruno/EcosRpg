@@ -184,6 +184,7 @@ function Dashboard({
           {
             configs.length > 0 ? (
               <>
+              {/* Personagens disponiveis */}
                 <Grid item xs={12}>
                   <Section
                     title="Fichas de personagens"

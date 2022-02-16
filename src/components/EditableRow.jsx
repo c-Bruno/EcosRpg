@@ -16,9 +16,30 @@ const EditableRow = ({
     editRow,
     deleteRow
 }) => {
+    console.log(data)
     return (
         <div className={classes.root}>
             <Grid container>
+                <Grid item md={6} xs={12}>
+                    <TextField
+                        disabled
+                        value={data.name || data.inventory.description}
+                        variant="standard"
+                        fullWidth
+                    />
+                </Grid>
+
+                {/* Peso em caso de exibir as informações de inventario */}
+                {data.inventory ? (
+                    <Grid item md={2} xs={12}>
+                        <TextField
+                            disabled
+                            value={data.inventory.weight + " kg"}
+                            variant="standard"
+                            fullWidth
+                        />
+                    </Grid>
+                ): ( console.log("Não possui peso"))}
                 <Grid item md={2} xs={6}>
                     <Button variant="outlined" onClick={() => deleteRow(data)}>
                         <DeleteIcon />
@@ -28,14 +49,6 @@ const EditableRow = ({
                     <Button variant="outlined" onClick={() => editRow(data)}>
                         <EditIcon />
                     </Button>
-                </Grid>
-                <Grid item md={8} xs={12}>
-                    <TextField
-                        disabled
-                        value={data.name}
-                        variant="standard"
-                        fullWidth
-                    />
                 </Grid>
             </Grid>
         </div>

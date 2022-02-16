@@ -1,18 +1,12 @@
-# Open Source RPG
-
-Tutorial: https://www.twitch.tv/videos/1215083891
-
 ## Sobre
-Este projeto surgiu como um fork com o objetivo de adaptar uma plataforma 
+Este projeto surgiu como um fork com o objetivo de adaptar uma plataforma de RPG com um sistema personalizado.
 
-### Recursos
-- ✔️ Ficha de personagem
-- ✔️ Painel do mestre para manipular o sistema
-- ✔️ Integração com o OBS (software de streaming) através de Browser Sources
-- ✔️ Rolagem de dados (integrada com o OBS)
-- Personalização completa da integração com o OBS
-- Recursos adicionais opcionais: sanidade, mana, estamina, inventário, etc.
-- Recurso adicional geral para o controle do mestre e do software
+## Instalação
+- Clone o projeto na sua maquina, ou baixe o zip.
+- Executar `npm install` para instalar as dependencias
+- Criar um banco de dados local e configurar a varivel DB_PROVIDER_URL apontando para este banco
+- Executar `npx prisma migrate reset` para fazer as migrações no banco
+- Executar `npm start` para iniciar
 
 ### Tecnologias sendo utilizadas
 - Next.JS com SSR (Server-Side Rendering) e API REST
