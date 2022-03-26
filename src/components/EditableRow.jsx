@@ -16,7 +16,6 @@ const EditableRow = ({
     editRow,
     deleteRow
 }) => {
-    console.log(data)
     return (
         <div className={classes.root}>
             <Grid container>

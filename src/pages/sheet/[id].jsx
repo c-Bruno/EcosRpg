@@ -218,6 +218,7 @@ function Sheet({
 
   const diceRollModal = useModal(({ close }) => (
     <DiceRollModal
+      amount={'1d100'}
       onDiceRoll={rollData => {
         const parsedData = {
           character_id: character.id,
@@ -411,12 +412,6 @@ function Sheet({
 
                       onClick={() => diceRollModal.appear()}
                     />
-                    {/* <Button
-                      variant="contained"
-                      onClick={() => diceRollModal.appear()}
-                    >
-                      ROLAR DADOS
-                    </Button> */}
                   </Grid>
 
                 </Grid>

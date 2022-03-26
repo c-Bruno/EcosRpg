@@ -2,7 +2,10 @@ import React from 'react'
 import { withStyles } from '@mui/styles'
 import Image from 'next/image';
 
-import { Grid, TextField } from '@mui/material'
+import { Grid, TextField, Alert } from '@mui/material'
+import { toast, ToastContainer } from 'react-toastify';
+import { render } from 'react-dom';
+import 'react-toastify/dist/ReactToastify.min.css'; 
 
 import useModal from '../hooks/useModal';
 
@@ -52,22 +55,23 @@ const SheetEditableRow = ({
         />
     ));
 
-    
     const diceRollModal = useModal(({ close }) => (
         <DiceRollModal
-        onDiceRoll={rollData => {
-            const parsedData = {
-            character_id: character.id,
-            rolls: rollData.map(each => ({
-                rolled_number: each.rolled_number,
-                max_number: each.max_number
-            }))
-            }
+            amount={'1d20'}
+            atribute={data.name}
+            valueAtribute={data.value}
+            onDiceRoll={rollData => {
+                const parsedData = {
+                character_id: character.id,
+                rolls: rollData.map(each => ({
+                    rolled_number: each.rolled_number,
+                    max_number: each.max_number
+                }))
+                }
 
-            socket.emit('dice_roll', parsedData);
-        }}
-        handleClose={close}
-        // characterId={character.id}
+                socket.emit('dice_roll', parsedData);
+            }}
+            handleClose={close}
         />
     ));
 
@@ -83,7 +87,7 @@ const SheetEditableRow = ({
                         width={40}
                         height={40}
 
-                        onClick={() => diceRollModal.appear()}
+                        onClick={() => {data.value ? diceRollModal.appear() : toast.error('Primeiro preencha o valor do atributo')}}
                     />
                 </Grid>
 
@@ -111,8 +115,11 @@ const SheetEditableRow = ({
                     />
                 </Grid>
             </Grid>
+            <ToastContainer />
         </div>
     )
 }
+
+//render(<SheetEditableRow/>);
 
 export default withStyles(styles)(SheetEditableRow);
