@@ -131,7 +131,7 @@ function Dashboard({
         api
           .delete(`/${type}/${id}`)
           .then(() => {
-            refreshData();
+            window.location.reload(false);
           })
           .catch(() => {
             alert(`Erro ao apagar: ${type}`);
@@ -154,7 +154,7 @@ function Dashboard({
       handleClose={close}
       data={custom.data || null}
       onSubmit={() => {
-        refreshData();
+        window.location.reload(false);
       }}
       operation={custom.operation}
     />
@@ -165,7 +165,7 @@ function Dashboard({
       handleClose={close}
       data={custom.data || null}
       onSubmit={() => {
-        refreshData();
+        window.location.reload(false);
       }}
       operation={custom.operation}
     />

@@ -2,6 +2,8 @@ import React from 'react'
 import Image from 'next/image';
 import { withStyles } from '@mui/styles'
 
+import { Grid, Container, Button, TextField } from '@mui/material';
+
 const styles = theme => ({
     root: {
         background: theme.palette.primary[600],
@@ -19,14 +21,14 @@ const styles = theme => ({
         margin: 0,
         marginTop: '10px',
         marginBottom: '10px',
-        marginLeft: '5px',
+        marginLeft: 'auto',
     },
     subtitle: {
         color: theme.palette.secondary.main,
         margin: 0,
         marginTop: '10px',
         marginBottom: '10px',
-        marginLeft: '5px',
+        marginLeft: 'auto',
     },
 })
 
@@ -54,11 +56,11 @@ const Section = ({
                             </Image>
                         ) : (image)}
                     
-                    {renderButton && (
-                        <div style={{ alignSelf: 'center' }}>
-                            {renderButton()}
-                        </div>
-                    )}
+                        {renderButton && (
+                            <Button style={{ alignSelf: 'center', float: 'right'}}>
+                                {renderButton()}
+                            </Button>
+                        )}
                     </h2>
 
                     

@@ -328,7 +328,7 @@ function Sheet({
   }
 
   return (
-    <Container style={{ marginBottom: '30px', maxWidth:'90%' }}>
+    <Container style={{ marginBottom: '30px', maxWidth:'1400px' }}>
         <Head>
           <title>{character.name}</title>
         </Head>
@@ -455,6 +455,8 @@ function Sheet({
                   style={{
                     paddingBottom: '16px'
                   }}>
+                  
+                  {/* Item */}
                   <Grid item md={6} xs={12}>
                     <TextField
                         disabled 
@@ -464,10 +466,21 @@ function Sheet({
                     />
                   </Grid>
 
-                  <Grid item md={6} xs={12}>
+                  {/* Espaço ocupado */}
+                  <Grid item md={3} xs={12}>
                     <TextField
                         disabled 
                         label="ESPAÇOS"
+                        variant="standard"
+                        fullWidth
+                    />
+                  </Grid>
+
+                  {/* Livre */}
+                  <Grid item md={3} xs={12}>
+                    <TextField
+                        disabled 
+                        label="(10 Livre)"
                         variant="standard"
                         fullWidth
                     />
@@ -647,6 +660,8 @@ const styles = (theme) => ({
       transform: 'rotate(360deg)'
     }
   },
+
+  
 });
 
 export default withStyles(styles)(Sheet);
