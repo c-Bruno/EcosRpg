@@ -5,7 +5,7 @@ import {
     Create as EditIcon
 } from '@mui/icons-material'
 
-import { Grid, Button, TextField } from '@mui/material'
+import { Grid, Button, TextField, Tooltip } from '@mui/material'
 
 const styles = theme => ({ })
 
@@ -18,7 +18,9 @@ const EditableRow = ({
 }) => {
     return (
         <div className={classes.root}>
+            {/* Inventario do personagem */}
             <Grid container>
+                {/* Descrição do item no inventario */}
                 <Grid item md={6} xs={12}>
                     <TextField
                         disabled
@@ -28,26 +30,34 @@ const EditableRow = ({
                     />
                 </Grid>
 
-                {/* Peso em caso de exibir as informações de inventario */}
+                {/* Peso do item no inventario */}
                 {data.inventory ? (
                     <Grid item md={2} xs={12}>
                         <TextField
-                            disabled
-                            value={data.inventory.weight + " kg"}
+                            disabled 
+                            value={data.inventory.weight}
                             variant="standard"
                             fullWidth
                         />
                     </Grid>
                 ): ( console.log("Não possui peso"))}
+
+                {/* Remover Item */}
                 <Grid item md={2} xs={6}>
-                    <Button variant="outlined" onClick={() => deleteRow(data)}>
-                        <DeleteIcon />
-                    </Button>
+                    <Tooltip title="Remover item do inventario">
+                        <Button variant="outlined" onClick={() => deleteRow(data)}>
+                            <DeleteIcon />
+                        </Button>
+                    </Tooltip>
                 </Grid>
+
+                {/* Editar Item */}
                 <Grid item md={2} xs={6}>
+                <Tooltip title="Editar indormações do item ">
                     <Button variant="outlined" onClick={() => editRow(data)}>
                         <EditIcon />
                     </Button>
+                    </Tooltip>
                 </Grid>
             </Grid>
         </div>

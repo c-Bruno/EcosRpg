@@ -51,6 +51,7 @@ function InventoryModal({
             return;
         }
 
+        // Se a operação for criar
         if(operation === 'create') {
             api.post('/inventory', inventory)
                 .then(() => {
@@ -60,13 +61,13 @@ function InventoryModal({
                     // Close modal
                     handleClose();
 
+                    // Limpa aa informações
                     resetState();
                 })
                 .catch(() => {
                     alert('Erro ao criar o item!');
                 });
-        }
-        else if (operation === 'edit') {
+        }  else if (operation === 'edit') { // Se a operação for editar
             api.put(`/inventory/${data.inventory.id}`, inventory)
                 .then(() => {
                     // Callback
@@ -88,11 +89,7 @@ function InventoryModal({
             open={true}
             onClose={handleClose}
         >
-            <DialogTitle>
-                {
-                    operation === 'create' ? 'Adicionar um novo item' : 'Editar item'
-                }
-            </DialogTitle>
+            <DialogTitle> { operation === 'create' ? 'Adicionar um novo item' : 'Editar item' }</DialogTitle>
             <DialogContent>
                 <Grid container spacing={3}>
                     <Grid item xs={12}>
@@ -121,12 +118,13 @@ function InventoryModal({
                             spellCheck={false}
                         />
                     </Grid>
+
                     <Grid item xs={12}>
                         <TextField
                             style={{
                                 marginTop: '15px'
                             }}
-                            label="Peso(kg)"
+                            label="Peso"
                             type="number"
                             fullWidth
                             multiline
@@ -149,6 +147,7 @@ function InventoryModal({
                     </Grid>
                 </Grid>
             </DialogContent>
+            
             <DialogActions>
                 <Button onClick={handleClose} color="secondary">
                     Cancelar

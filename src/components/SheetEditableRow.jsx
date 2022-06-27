@@ -47,6 +47,7 @@ const SheetEditableRow = ({
     onValueChange,
     onInput
 }) => {
+    console.log(data)
     const infoModal = useModal(({ close }) => (
         <InfoModal
             title={data.name}
@@ -58,6 +59,7 @@ const SheetEditableRow = ({
     const diceRollModal = useModal(({ close }) => (
         <DiceRollModal
             amount={'1d20'}
+            // character={character}
             atribute={data.name}
             valueAtribute={data.value}
             onDiceRoll={rollData => {

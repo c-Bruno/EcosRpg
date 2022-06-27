@@ -23,11 +23,13 @@ function DiceRollModal({
     valueAtribute,
     atribute,
     
+    character,
     characterId,
     onDiceRoll
 }) {
     var diceNumber = {number: ''}
     var diceTypeResult = {description: ''}
+    console.log(character)
 
     function rollDamage(amountDamage) {            
         const diceRandomNumber = rollDice(amountDamage)

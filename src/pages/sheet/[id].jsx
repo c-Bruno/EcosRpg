@@ -177,7 +177,7 @@ function Sheet({
         api
           .delete(`/${type}/${id}`)
           .then(() => {
-            refreshData();
+            window.location.reload(false);
           })
           .catch(() => {
             alert(`Erro ao apagar: ${type}`);
@@ -251,7 +251,7 @@ function Sheet({
       data={custom.data || null}
       character={custom.character || custom.data.character_id}
       onSubmit={() => {
-        refreshData();
+        window.location.reload(false);
       }}
       operation={custom.operation}
     />
@@ -442,13 +442,38 @@ function Sheet({
                       display: 'flex',
                       alignSelf: 'center',
                     }}
+                    
                     // Botão para criar novo item
                     onClick={() => inventoryModal.appear({ operation: 'create', character: character.id })}
                   >
-                    <AddIcon />
+                    <AddIcon/>
                   </Button>
                 )}>
+                
+                {/* Cabeçalho das informações de inventario */}
+                <Grid container
+                  style={{
+                    paddingBottom: '16px'
+                  }}>
+                  <Grid item md={6} xs={12}>
+                    <TextField
+                        disabled 
+                        label="ITEM"
+                        variant="standard"
+                        fullWidth
+                    />
+                  </Grid>
 
+                  <Grid item md={6} xs={12}>
+                    <TextField
+                        disabled 
+                        label="ESPAÇOS"
+                        variant="standard"
+                        fullWidth
+                    />
+                  </Grid>
+                </Grid>
+        
                 {/* Mapeia cada item disponivel para este personagem */}
                 <Grid item container xs={12} spacing={2} className={classes.scrollableBox}>
                   {character.inventory.map((inventory, index) => (
@@ -459,6 +484,7 @@ function Sheet({
                         editRow={(data) => {
                           inventoryModal.appear({ operation: 'edit', data });
                         }}
+                        
                         // Deletar item do inventario
                         deleteRow={(data) => {
                           confirmationModal.appear({

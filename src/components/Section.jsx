@@ -43,7 +43,8 @@ const Section = ({
         <div className={classes.root}>
             <div>
                 <div style={{ textAlign: 'center' }}>
-                    <h2 className={classes.title}>{title}
+                    <h2 className={classes.title}>
+                        {title }
                         {image ? (
                             <Image
                                 src={image}
@@ -52,20 +53,22 @@ const Section = ({
                                 height={30}>       
                             </Image>
                         ) : (image)}
+                    
+                    {renderButton && (
+                        <div style={{ alignSelf: 'center' }}>
+                            {renderButton()}
+                        </div>
+                    )}
                     </h2>
+
+                    
                     <span style={{ textAlign: 'center'}}
                     className={classes.subtitle}>
                         {subtitle}
                     </span>
                 </div>
-                {
-                    renderButton && (
-                        <div style={{ alignSelf: 'center' }}>
-                            {renderButton()}
-                        </div>
-                    )
-                }
             </div>
+
             <div style={{ padding: '20px' }}>
                 {children}
             </div>

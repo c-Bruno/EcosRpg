@@ -187,7 +187,7 @@ function Dashboard({
               {/* Personagens disponiveis */}
                 <Grid item xs={12}>
                   <Section
-                    title="Fichas de personagens"
+                    title="Fichas de personagens      " image="/assets/characters.png" 
                   >
                     <Grid item container xs={12} spacing={3}>
                       {characters.map((character, index) => (
@@ -214,7 +214,7 @@ function Dashboard({
                 {/* Lista de ATRIBUTOS adicionadas e opção para adicionar */}
                 <Grid item xs={12} md={6}>
                   <Section
-                    title="Atributos"
+                    title="Atributos   " image="/assets/atributes.png"
                     renderButton={() => (
                       <Button
                         variant="outlined"
@@ -235,6 +235,7 @@ function Dashboard({
                       spacing={2}
                       className={classes.scrollableBox}
                     >
+                      {/* Para cada atributo existente, exiba as informações */}
                       {attributes.map((attribute, index) => (
                         <Grid item xs={12} key={index}>
                           <EditableRow
@@ -259,7 +260,7 @@ function Dashboard({
                 {/* Lista de PERICIAS adicionadas e opção para adicionar */}
                 <Grid item xs={12} md={6}>
                   <Section
-                    title="Perícias"
+                    title="Perícias   " image="/assets/expertise.png"
                     renderButton={() => (
                       <Button
                         variant="outlined"
@@ -313,9 +314,9 @@ function Dashboard({
                       spacing={2}
                     >
                         <Grid container spacing={2} item xs={12}>
-                          <Grid item xs={12}>
+                          {/* <Grid item xs={12}>
                             <h4>Integração com OBS</h4>
-                          </Grid>
+                          </Grid> */}
 
                           <Grid item xs={4}>
                             <TextField
