@@ -139,4 +139,4 @@ function StatusBarModal({
     )
 }
 
-export default withStyles(styles)(StatusBarModal);
+export default withStyles(styles)(StatusBarModal); 

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { withStyles } from '@mui/styles';
 import Image from 'next/image';
 import {
-    TextField, Dialog, DialogActions, DialogContent, DialogContentText,
+    TextField, Dialog, DialogActions, DialogContent, DialogContentText, Chip,
     DialogTitle, Button, Grid, Select, MenuItem, FormControl, InputLabel, Box
 } from '@mui/material'
 
@@ -12,6 +12,15 @@ const styles = (theme) => ({
     dice: {
         transition: '-webkit-transform .8s ease-in-out',
         transform: 'transform .8s ease-in-out',
+    },
+
+    formarChip: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        fontSize: 'medium'
     }
 })
 
@@ -27,9 +36,9 @@ function DiceRollModal({
     characterId,
     onDiceRoll
 }) {
-    var diceNumber = {number: ''}
-    var diceTypeResult = {description: ''}
-    console.log(character)
+    var diceNumber = {number: ''} // Numero da rolagem de dado
+    var diceTypeResult = {description: ''} // Resultado obtido(Extremo, Sucesso Bom, Sucesso Normal, Fracasso, Fracasso extremo)
+    var dicResultColor = {color: ''} // Cor exibida na tela
 
     function rollDamage(amountDamage) {            
         const diceRandomNumber = rollDice(amountDamage)
@@ -38,7 +47,15 @@ function DiceRollModal({
         if (atribute){
             const diceType = calcDice(atribute, amount, diceRandomNumber) 
             diceTypeResult = {description: diceType}
-            console.log(diceType)
+            
+            // Define qual vai ser a cor do component Chip exibido
+            if (diceTypeResult.description == 'Extremo') {
+                dicResultColor = {color: 'success'}
+            } else if (diceTypeResult.description == 'Sucesso Bom' || diceTypeResult.description == 'Sucesso Normal'){
+                dicResultColor = {color: 'primary'}
+            } else {
+                dicResultColor = {color: 'error'}
+            }
         }
 
         setTimeout(() => {      
@@ -120,10 +137,10 @@ function DiceRollModal({
     
         const type = (ability <= 20) ? table[ability - 1] : table[20] // Verificar a faixa de valor que vai ser utilizada 
         if (dice >= type.extreme) return 'Extremo'
-        if (dice >= type.good) return 'Sucesso Bom'
-        if (dice >= type.normal) return 'Sucesso Normal'
-        if (dice >= type.extremeFail) return 'Fracasso'
-        if (dice < type.extremeFail) return 'Fracasso extremo'
+        else if (dice >= type.good) return 'Sucesso Bom'
+        else if (dice >= type.normal) return 'Sucesso Normal'
+        else if (dice >= type.extremeFail) return 'Fracasso'
+        else if (dice < type.extremeFail) return 'Fracasso extremo'
     }
 
     return (
@@ -135,6 +152,7 @@ function DiceRollModal({
                             container spacing={0}
                             alignItems="center"
                             justifyContent="center">
+                            {/* Dado na tela */}
                             <Image
                                 src={'/assets/dice.png'}
                                 alt="Dice roll"
@@ -144,41 +162,27 @@ function DiceRollModal({
                             />
                         </Grid>
 
+                        {/* Valor/numero retornado na rolagem */}
                         <Grid item xs={12}>
-                            <Box sx={{width: 500, maxWidth: '100%', marginLeft: 'auto', marginRight: 'auto', marginTop: '2%'}}>
-                                <TextField
-                                    fullWidth
-                                    inputProps={{min: 0, style: { textAlign: 'center' }}}
-                                    type="text"
-                                    variant="standard"
-                                    value={ diceNumber.number }
-                                    disabled
-                                />
+                            <Box sx={{width: 500, maxWidth: '100%', marginLeft: 'auto', marginRight: 'auto', marginTop: '1%'}}>
+                                <Chip label={ diceNumber.number } className={ classes.formarChip } color={ dicResultColor.color } size="medium" style={{width: '20%'}} variant="outlined"/>
                             </Box>
                         </Grid>
 
-                        { atribute ? (
+                        {/* Tipo de resultado obtido */}
+                        {atribute ? (
                             <Grid item xs={12}>
-                                <Box sx={{width: 500, maxWidth: '100%', marginLeft: 'auto', marginRight: 'auto', marginTop: '2%'}}>
-                                    <TextField
-                                        fullWidth
-                                        inputProps={{min: 0, style: { textAlign: 'center' }}}
-                                        type="text"
-                                        variant="standard"
-                                        value={ diceTypeResult.description }
-                                        disabled
-                                    />
+                                <Box sx={{width: 500, maxWidth: '100%', marginLeft: 'auto', marginRight: 'auto', marginTop: '0.5%'}}>
+                                    <Chip label={ diceTypeResult.description } className={ classes.formarChip } color={ dicResultColor.color } size="medium" style={{width: '50%'}}/>
                                 </Box>
                             </Grid>)
                         : (atribute)}
                     </Grid>
                 }
             </DialogContent>
+
             <DialogActions>
-                <Button
-                    onClick={handleClose}
-                    color="secondary"
-                >
+                <Button onClick={handleClose} color="secondary">
                     Fechar
                 </Button>
                 {/* <Button

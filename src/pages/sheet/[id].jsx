@@ -363,7 +363,7 @@ function Sheet({
                         <StatusBar
                           current={character.current_hit_points} // Vida Atual
                           max={character.max_hit_points} // Vida Total
-                          label={`${character.current_hit_points}/${character.max_hit_points}`}
+                          label={`${character.current_hit_points}/${character.max_hit_points}`} // Valor exibido em tela
                           primaryColor={`${'#640101'}`}
                           secondaryColor="#1b1517"
                           onClick={() => {
@@ -371,8 +371,7 @@ function Sheet({
                           }}
                         />
                       </Grid>                      
-                    </Grid>
-                    
+                    </Grid>                    
                   </Grid>
 
                   {/* Sanidade do personagem*/}
@@ -385,7 +384,7 @@ function Sheet({
                         <StatusBar
                           current={character.current_sanity_points} // Sanidade Atual
                           max={character.max_sanity_points} // Sanidade Total
-                          label={`${character.current_sanity_points}/${character.max_sanity_points}`}
+                          label={`${character.current_sanity_points}/${character.max_sanity_points}`} // Valor exibido em tela
                           primaryColor={`${'#011B64'}`}
                           secondaryColor="#1b1517"
                           onClick={() => {
@@ -480,7 +479,7 @@ function Sheet({
                   <Grid item md={3} xs={12}>
                     <TextField
                         disabled 
-                        label="(10 Livre)"
+                        label="(9 Livre)"
                         variant="standard"
                         fullWidth
                     />
@@ -563,8 +562,80 @@ function Sheet({
                 </Button>
               )}>
 
-              </Section>
-            </Grid>
+              {/* Cabeçalho das informações de inventario */}
+              <Grid container style={{paddingBottom: '16px'}}>
+                {/* Nome da arma */}
+                <Grid item md={2} xs={12}>
+                  <TextField
+                      disabled 
+                      label="ARMA"
+                      variant="standard"
+                      fullWidth
+                  />
+                </Grid>
+
+                {/* Tipo */}
+                <Grid item md={2} xs={12}>
+                  <TextField
+                      disabled 
+                      label="TIPO"
+                      variant="standard"
+                      fullWidth
+                  />
+                </Grid>
+
+                {/* Dano */}
+                <Grid item md={1} xs={12}>
+                  <TextField
+                      disabled 
+                      label="DANO"
+                      variant="standard"
+                      fullWidth
+                  />
+                </Grid>
+
+                {/* Carga atual / Quantidade de balas */}
+                <Grid item md={2} xs={12}>
+                  <TextField
+                      disabled 
+                      label="CARGA ATUAL"
+                      variant="standard"
+                      fullWidth
+                  />
+                </Grid>
+
+                {/* Carga Maxima / Maximo de  */}
+                <Grid item md={2} xs={12}>
+                  <TextField
+                      disabled 
+                      label="CARGA MAXIMA"
+                      variant="standard"
+                      fullWidth
+                  />
+                </Grid>
+
+                {/* Alcance */}
+                <Grid item md={1} xs={12}>
+                  <TextField
+                      disabled 
+                      label="ALCANCE"
+                      variant="standard"
+                      fullWidth
+                  />
+                </Grid>
+
+                {/* Grid vazio para as opções */}
+                <Grid item md={2} xs={12}>
+                  <TextField
+                      disabled 
+                      label=" "
+                      variant="standard"
+                      fullWidth
+                  />
+                </Grid>
+              </Grid>
+            </Section>
+          </Grid>
             
             {/* Item especial */}
             <Grid item xs={12} md={4}>

@@ -4,8 +4,10 @@ import { Grid, TextField, Button } from '@mui/material';
 import { CharacterInfoSchema } from '../../validations';
 
 import Loader from '../Loader';
+import { withThemeCreator } from '@mui/styles';
 
 const CharacterInfoForm = ({
+    classes,
     initialValues,
     onSubmit
 }) => (
@@ -35,7 +37,7 @@ const CharacterInfoForm = ({
         isSubmitting
       }) => (
         // Formulario contendo os dados da ficha de um jogador
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmit} autoComplete="off">
             <Grid container item xs={12} spacing={3}>
                 {/* Nome do jogador*/}
                 <Grid item xs={12}>
