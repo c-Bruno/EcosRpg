@@ -14,8 +14,8 @@ import { api } from '../../utils';
 import socket from '../../utils/socket';
 
 import {
-  Header, Section, StatusBar, SheetEditableRow, EditableRow, ConfirmationModal,
-  DiceRollModal, StatusBarModal, ChangePictureModal, InventoryModal
+  Header, Section, StatusBar, SheetEditableRow, TableBox, EditableRow, ConfirmationModal,
+  DiceRollModal, StatusBarModal, ChangePictureModal, InventoryModal, CombatModal
 } from '../../components';
 
 import {
@@ -247,6 +247,19 @@ function Sheet({
   // Aciona o modal de inventario
   const inventoryModal = useModal(({ close, custom }) => (
     <InventoryModal
+      handleClose={close}
+      data={custom.data || null}
+      character={custom.character || custom.data.character_id}
+      onSubmit={() => {
+        window.location.reload(false);
+      }}
+      operation={custom.operation}
+    />
+  ));
+
+  // Aciona o modal de combat
+  const combatModal = useModal(({ close, custom }) => (
+    <CombatModal
       handleClose={close}
       data={custom.data || null}
       character={custom.character || custom.data.character_id}
@@ -556,84 +569,13 @@ function Sheet({
                     display: 'flex',
                     alignSelf: 'center',
                   }}
-                  onClick={() => attributeModal.appear({ operation: 'create' })}
+                  onClick={() => combatModal.appear({ operation: 'create' })}
                 >
                   <AddIcon />
                 </Button>
               )}>
-
-              {/* Cabeçalho das informações de inventario */}
-              <Grid container style={{paddingBottom: '16px'}}>
-                {/* Nome da arma */}
-                <Grid item md={2} xs={12}>
-                  <TextField
-                      disabled 
-                      label="ARMA"
-                      variant="standard"
-                      fullWidth
-                  />
-                </Grid>
-
-                {/* Tipo */}
-                <Grid item md={2} xs={12}>
-                  <TextField
-                      disabled 
-                      label="TIPO"
-                      variant="standard"
-                      fullWidth
-                  />
-                </Grid>
-
-                {/* Dano */}
-                <Grid item md={1} xs={12}>
-                  <TextField
-                      disabled 
-                      label="DANO"
-                      variant="standard"
-                      fullWidth
-                  />
-                </Grid>
-
-                {/* Carga atual / Quantidade de balas */}
-                <Grid item md={2} xs={12}>
-                  <TextField
-                      disabled 
-                      label="CARGA ATUAL"
-                      variant="standard"
-                      fullWidth
-                  />
-                </Grid>
-
-                {/* Carga Maxima / Maximo de  */}
-                <Grid item md={2} xs={12}>
-                  <TextField
-                      disabled 
-                      label="CARGA MAXIMA"
-                      variant="standard"
-                      fullWidth
-                  />
-                </Grid>
-
-                {/* Alcance */}
-                <Grid item md={1} xs={12}>
-                  <TextField
-                      disabled 
-                      label="ALCANCE"
-                      variant="standard"
-                      fullWidth
-                  />
-                </Grid>
-
-                {/* Grid vazio para as opções */}
-                <Grid item md={2} xs={12}>
-                  <TextField
-                      disabled 
-                      label=" "
-                      variant="standard"
-                      fullWidth
-                  />
-                </Grid>
-              </Grid>
+              
+              <TableBox></TableBox>
             </Section>
           </Grid>
             

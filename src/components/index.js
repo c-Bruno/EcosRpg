@@ -6,6 +6,7 @@ import AddBox from './AddBox'
 import CreateCharacterModal from './modals/CreateCharacterModal'
 import ConfirmationModal from './modals/ConfirmationModal'
 import AttributeModal from './modals/AttributeModal'
+import CombatModal from './modals/CombatModal'
 import InventoryModal from './modals/InventoryModal'
 import SkillModal from './modals/SkillModal'
 import StatusBarModal from './modals/StatusBarModal'
@@ -16,6 +17,7 @@ import ChangePictureModal from './modals/ChangePictureModal'
 
 import EditableRow from './EditableRow'
 import SheetEditableRow from './SheetEditableRow'
+import TableBox from './TableBox'
 
 import Loader from './Loader'
 
@@ -32,6 +34,7 @@ export {
     CreateCharacterModal,
     ConfirmationModal,
     AttributeModal,
+    CombatModal,
     InventoryModal,
     SkillModal,
     StatusBarModal,
@@ -41,6 +44,7 @@ export {
     ChangePictureModal,
 
     EditableRow,
+    TableBox,
     Loader,
 
     StatusBar,
