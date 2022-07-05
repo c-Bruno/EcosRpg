@@ -29,7 +29,6 @@ export default async function handler(req, res) {
         return res.status(200).json(inventory);
     }
     else if(req.method === 'GET') {
-        console.log('entrei aqui')
         const inventorys = await prisma.inventory.findMany({
             orderBy: [{ description: 'asc'}]
         });

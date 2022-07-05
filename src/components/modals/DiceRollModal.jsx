@@ -38,7 +38,7 @@ function DiceRollModal({
 }) {
     var diceNumber = {number: ''} // Numero da rolagem de dado
     var diceTypeResult = {description: ''} // Resultado obtido(Extremo, Sucesso Bom, Sucesso Normal, Fracasso, Fracasso extremo)
-    var dicResultColor = {color: ''} // Cor exibida na tela
+    var dicResultColor = {color: 'primary'} // Cor exibida na tela
 
     function rollDamage(amountDamage) {            
         const diceRandomNumber = rollDice(amountDamage)

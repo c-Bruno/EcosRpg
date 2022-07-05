@@ -47,7 +47,7 @@ const SheetEditableRow = ({
     onValueChange,
     onInput
 }) => {
-    console.log(data)
+    // console.log(data)
     const infoModal = useModal(({ close }) => (
         <InfoModal
             title={data.name}

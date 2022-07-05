@@ -6,6 +6,7 @@ import {
 } from '@mui/material'
 
 import { api } from '../../utils';
+import TableBox from '../TableBox';
 
 const styles = theme => ({
 
@@ -85,67 +86,15 @@ function CombatModal({
     }
 
     return (
-        <Dialog
+        <Dialog 
+            fullWidth
+            maxWidth="lg"
             open={true}
             onClose={handleClose}
         >
             <DialogTitle> { operation === 'create' ? 'Adicionar um novo item' : 'Editar item' }</DialogTitle>
-            <DialogContent>
-                <Grid container spacing={3}>
-                    <Grid item xs={12}>
-                        <TextField
-                            style={{
-                                marginTop: '15px'
-                            }}
-                            autoFocus
-                            label="Descrição"
-                            type="text"
-                            fullWidth
-                            variant="standard"                           
-                            defaultValue={data? (
-                                data.inventory.description
-                            ): ("")}
-                            onChange={
-                                ({ target }) => {
-                                    const value = target.value;
-
-                                    setInventory(prevState => ({
-                                        ...prevState,
-                                        description: value
-                                    }));
-                                }
-                            }
-                            spellCheck={false}
-                        />
-                    </Grid>
-
-                    <Grid item xs={12}>
-                        <TextField
-                            style={{
-                                marginTop: '15px'
-                            }}
-                            label="Peso"
-                            type="number"
-                            fullWidth
-                            multiline
-                            variant="standard"
-                            defaultValue={data ? (
-                                data.inventory.weight
-                            ): ("")}
-                            onChange={
-                                ({ target }) => {
-                                    const value = Number(target.value);
-
-                                    setInventory(prevState => ({
-                                        ...prevState,
-                                        weight: value
-                                    }));
-                                }
-                            }
-                            spellCheck={false}
-                        />
-                    </Grid>
-                </Grid>
+            <DialogContent >
+                <TableBox character={character} ></TableBox>
             </DialogContent>
             
             <DialogActions>

@@ -6,7 +6,7 @@ import { Add as AddIcon } from '@mui/icons-material';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 
-import { Grid, Container, Button, TextField } from '@mui/material';
+import { Grid, Container, Button, TextField, Tooltip } from '@mui/material';
 import { withStyles } from '@mui/styles';
 
 import { api } from '../../utils';
@@ -216,6 +216,7 @@ function Sheet({
     />
   ));
 
+  // Modal dos dados
   const diceRollModal = useModal(({ close }) => (
     <DiceRollModal
       amount={'1d100'}
@@ -257,7 +258,7 @@ function Sheet({
     />
   ));
 
-  // Aciona o modal de combat
+  // Aciona o modal de combate
   const combatModal = useModal(({ close, custom }) => (
     <CombatModal
       handleClose={close}
@@ -513,7 +514,7 @@ function Sheet({
                         // Deletar item do inventario
                         deleteRow={(data) => {
                           confirmationModal.appear({
-                            title: 'Apagar Item do inventário',
+                            title: 'Apagar item do inventário',
                             text: 'Deseja apagar este item?',
                             data: { id: data.inventory.id, type: 'inventory' },
                           });
@@ -563,16 +564,18 @@ function Sheet({
             <Grid item xs={12}>
               <Section title="Combate   " image="/assets/slash.png"
                 renderButton={() => (
-                <Button
-                  variant="outlined"
-                  style={{
-                    display: 'flex',
-                    alignSelf: 'center',
-                  }}
-                  onClick={() => combatModal.appear({ operation: 'create' })}
-                >
-                  <AddIcon />
-                </Button>
+                  <Tooltip title="Criar item">
+                    <Button
+                      variant="outlined"
+                      style={{
+                        display: 'flex',
+                        alignSelf: 'center',
+                      }}
+                      onClick={() => combatModal.appear({ operation: 'create', character: character.id })}
+                    >
+                      <AddIcon />
+                    </Button>
+                  </Tooltip>
               )}>
               
               <TableBox></TableBox>
