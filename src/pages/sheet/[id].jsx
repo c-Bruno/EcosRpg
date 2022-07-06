@@ -57,9 +57,16 @@ export const getServerSideProps = async ({ params }) => {
           include: {
             inventory: true
           }
+        },
+        combat: {
+          include: {
+            combat: true
+          }
         }
     }
   });
+
+  console.log(character)
 
   // Se não tiver, seta como null para notificar que não existe
   if(!character) {
@@ -578,7 +585,7 @@ function Sheet({
                   </Tooltip>
               )}>
               
-              <TableBox></TableBox>
+              <TableBox character={character}></TableBox>
             </Section>
           </Grid>
             

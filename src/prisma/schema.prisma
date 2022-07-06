@@ -1,7 +1,7 @@
 datasource db {
   provider = "mysql"
-   url      = env("DB_PROVIDER_URL")
-  }
+  url      = env("DB_PROVIDER_URL") 
+}
 
 generator client {
   provider = "prisma-client-js"
@@ -33,6 +33,7 @@ model Character {
 
   attributes CharacterAttributes[]
   inventory CharacterInventory[]
+  combat CharacterCombat[]
   skills CharacterSkills[]
   rolls Roll[]
   
@@ -55,6 +56,7 @@ model Inventory {
   id Int @id @default(autoincrement())
   description String?
   weight Float? @default(0.00)
+  character_id Int
 
   characters CharacterInventory[]
   
@@ -81,6 +83,32 @@ model Attribute {
   characters CharacterAttributes[]
   
   @@map("attribute")
+}
+
+model CharacterCombat {
+  character Character @relation(fields: [character_id], references: [id])
+  character_id Int
+  combat Combat @relation(fields: [combat_id], references: [id])
+  combat_id Int
+
+  value String?
+
+  @@id([character_id, combat_id])
+  @@map("character_combat")
+}
+
+model Combat {
+  id Int @id @default(autoincrement())
+  weapon String
+  type String?
+  damage String?
+  current_load String?
+  total_load String?
+  character_id Int
+
+  characters CharacterCombat[]
+  
+  @@map("combat")
 }
 
 model CharacterSkills {

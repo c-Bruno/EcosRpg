@@ -2,11 +2,19 @@ import React, { useState, useEffect } from 'react';
 import { withStyles } from '@mui/styles';
 import {
     TextField, Dialog, DialogActions, DialogContent, Grid,
-    DialogTitle, Button
+    DialogTitle, Button, FormControl, InputLabel, Select, MenuItem
 } from '@mui/material'
 
 import { api } from '../../utils';
-import TableBox from '../TableBox';
+
+import Box from '@mui/material/Box';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import TableHead from '@mui/material/TableHead';
 
 const styles = theme => ({
 
@@ -21,9 +29,27 @@ function CombatModal({
     operation,
     character
 }) {
-    const [inventory, setInventory] = useState({
-        description: '',
-        weight: null,
+    // Definir dados do cabeçalho da tabela
+    const columns = [
+        { id: 'weapon', label: 'ARMA', minWidth: 150 },
+        { id: 'type', label: 'TIPO', minWidth: 100},
+        { id: 'damage', label: 'DANO', minWidth: 100},
+        { id: 'current_load', label: 'CARGA ATUAL', minWidth: 70},
+        { id: 'total_load', label: 'CARGA MÁXIMA', minWidth: 70},
+    ]; 
+
+    // Tipo de armas
+    const [type, setType] = React.useState('');
+    const handleChange = (event) => {
+        setType(event.target.value);
+    };
+
+    const [combat, setCombat] = useState({
+        weapon: '',
+        type: '',
+        damage: '',
+        current_load: '',
+        total_load: '',
         character_id: character
     });
 
@@ -32,29 +58,35 @@ function CombatModal({
             return;
         }
 
-        setInventory({
-            description: data.inventory.description,
-            weight: data.inventory.weight,
+        setCombat({
+            weapon: data.combat.weapon,
+            type: data.combat.type,
+            damage: data.combat.damage,
+            current_load: data.combat.current_load,
+            total_load: data.combat.total_load,
             character_id: character
         });
     }, [data]);
     
     const resetState = () => {
-        return setInventory({
-            description: '',
-            weight: null,
+        return setCombat({
+            weapon: '',
+            type: '',
+            damage: '',
+            current_load: '',
+            total_load: '',
             character_id: character
         });
     }
 
     const submit = () => {
-        if(!inventory.description) {
+        if(!combat.weapon) {
             return;
         }
 
         // Se a operação for criar
         if(operation === 'create') {
-            api.post('/inventory', inventory)
+            api.post('/combat', combat)
                 .then(() => {
                     // Callback
                     onSubmit();
@@ -69,7 +101,7 @@ function CombatModal({
                     alert('Erro ao criar o item!');
                 });
         }  else if (operation === 'edit') { // Se a operação for editar
-            api.put(`/inventory/${data.inventory.id}`, inventory)
+            api.put(`/combat/${data.combat.id}`, combat)
                 .then(() => {
                     // Callback
                     onSubmit();
@@ -94,7 +126,136 @@ function CombatModal({
         >
             <DialogTitle> { operation === 'create' ? 'Adicionar um novo item' : 'Editar item' }</DialogTitle>
             <DialogContent >
-                <TableBox character={character} ></TableBox>
+                <TableContainer component={Paper}>
+                    <Table sx={{ minWidth: 500 }} aria-label="custom pagination table" stickyHeader >
+                        {/* Cabeçalho da tabela */}
+                        <TableHead>
+                            <TableRow>
+                            {columns.map((column) => (
+                                <TableCell
+                                key={column.id}
+                                align={column.align}
+                                style={{ minWidth: column.minWidth }}
+                                >
+                                {column.label}
+                                </TableCell>
+                            ))}
+                            </TableRow>
+                        </TableHead>
+
+                        <TableBody>
+                            <TableRow>
+                            {/* Descrição da arma */}
+                                <TableCell component="th" scope="row">
+                                    <TextField id="filled-basic" label="Descrição" variant="standard" 
+                                        defaultValue={data? (
+                                            data.combat.weapon
+                                        ): ("")}
+                                        onChange={
+                                            ({ target }) => {
+                                                const value = target.value;
+            
+                                                setCombat(prevState => ({
+                                                    ...prevState,
+                                                    weapon: value
+                                                }));
+                                            }
+                                        }
+                                    />
+                                </TableCell>
+
+                                {/* Tipo */}
+                                <TableCell style={{ minWidth: 180 }} align="right">
+                                    <FormControl fullWidth variant="standard">
+                                        <InputLabel id="demo-simple-select-label">Tipo da arma</InputLabel>
+                                        <Select
+                                            labelId="demo-simple-select-label"
+                                            id="demo-simple-select"
+                                            // value={type}
+                                            label="Tipo de arma"
+                                            defaultValue={data? (
+                                                data.combat.type
+                                            ): ("")}
+                                            onChange={
+                                                
+                                                ({ target }) => {
+                                                    const value = target.value;
+                
+                                                    setCombat(prevState => ({
+                                                        ...prevState,
+                                                        type: value
+                                                    }));
+                                                }
+                                            }
+                                        >
+                                            <MenuItem value='Balistico'>Balístico</MenuItem>
+                                            <MenuItem value='Fisico'>Físico</MenuItem>
+                                            <MenuItem value='Fogo'>Fogo</MenuItem>
+                                        </Select>
+                                    </FormControl>
+                                </TableCell>
+
+                                {/* Dano */}
+                                <TableCell style={{ minWidth: 100 }} align="right">
+                                    <TextField id="filled-basic" label="Dano" variant="standard" 
+                                        defaultValue={data? (
+                                            data.combat.damage
+                                        ): ("")}
+                                        onChange={
+                                            ({ target }) => {
+                                                const value = target.value;
+            
+                                                setCombat(prevState => ({
+                                                    ...prevState,
+                                                    damage: value
+                                                }));
+                                            }
+                                        }
+                                    />
+                                </TableCell>
+
+                                {/* Carga atual */}
+                                <TableCell style={{ minWidth: 70 }} align="right">
+                                    <TextField id="filled-basic" label="Carga Atual" variant="standard" 
+                                        defaultValue={data? (
+                                            data.combat.current_load
+                                        ): ("")}
+                                        onChange={
+                                            ({ target }) => {
+                                                const value = target.value;
+            
+                                                setCombat(prevState => ({
+                                                    ...prevState,
+                                                    current_load: value
+                                                }));
+                                            }
+                                        }
+                                    />
+                                </TableCell>
+
+                                {/* Capacidade */}
+                                <TableCell style={{ minWidth: 70 }} align="right">
+                                    <TextField id="filled-basic" label="Carga Maxima" variant="standard" 
+                                        defaultValue={data? (
+                                            data.combat.total_load
+                                        ): ("")}
+                                        onChange={
+                                            ({ target }) => {
+                                                const value = target.value;
+            
+                                                setCombat(prevState => ({
+                                                    ...prevState,
+                                                    total_load: value
+                                                }));
+                                            }
+                                        }
+                                    />
+                                </TableCell>
+                            </TableRow>
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+                {/* <TableBox character={character} combat={combat} data={data}></TableBox> */}
             </DialogContent>
             
             <DialogActions>

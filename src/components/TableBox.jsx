@@ -86,8 +86,8 @@ TablePaginationActions.propTypes = {
 };
 
 // Cria cada linha da coluna
-function createData(weapon, type, damage, current, capacity) {
-  return { weapon, type, damage, current, capacity };
+function createData(weapon, type, damage, current_load, total_load) {
+  return { weapon, type, damage, current_load, total_load };
 }
 
 // Definir dados do cabeçalho da tabela
@@ -95,8 +95,8 @@ const columns = [
     { id: 'weapon', label: 'ARMA', minWidth: 150 },
     { id: 'type', label: 'TIPO', minWidth: 100, align: 'right'},
     { id: 'damage', label: 'DANO', minWidth: 100, align: 'right'},
-    { id: 'current', label: 'CARGA ATUAL', minWidth: 70, align: 'right'},
-    { id: 'capacity', label: 'CARGA MÁXIMA', minWidth: 70, align: 'right'},
+    { id: 'current_load', label: 'CARGA ATUAL', minWidth: 70, align: 'right'},
+    { id: 'total_load', label: 'CARGA MÁXIMA', minWidth: 70, align: 'right'},
     { id: 'options', label: '', minWidth: 100, align: 'right'},
 ];  
 
@@ -118,13 +118,9 @@ const rows = [
 ].sort((a, b) => (a.weapon < b.weapon ? -1 : 1)); // Ordena alfabeticamente
 
 export default function TableBox(props) {
+  console.log(props.character)
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-
-  const [type, setType] = React.useState('');
-  const handleChange = (event) => {
-    setType(event.target.value);
-  };
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
@@ -152,27 +148,27 @@ export default function TableBox(props) {
     />
   ));
 
-    // Modal de confirmação
-    const confirmationModal = useModal(({ close, custom }) => (
-      <ConfirmationModal
-        title={custom.title}
-        text={custom.text}
-        data={custom.data}
-        handleClose={close}
-        onConfirmation={(data) => {
-          const { id, type } = data;
-  
-          api
-            .delete(`/${type}/${id}`)
-            .then(() => {
-              window.location.reload(false);
-            })
-            .catch(() => {
-              alert(`Erro ao apagar: ${type}`);
-            });
-        }}
-      />
-    ));
+  // Modal de confirmação
+  const confirmationModal = useModal(({ close, custom }) => (
+    <ConfirmationModal
+      title={custom.title}
+      text={custom.text}
+      data={custom.data}
+      handleClose={close}
+      onConfirmation={(data) => {
+        const { id, type } = data;
+
+        api
+          .delete(`/${type}/${id}`)
+          .then(() => {
+            window.location.reload(false);
+          })
+          .catch(() => {
+            alert(`Erro ao apagar: ${type}`);
+          });
+      }}
+    />
+  ));
 
   return (
     <TableContainer component={Paper}>
@@ -194,136 +190,92 @@ export default function TableBox(props) {
         </TableHead>
         
         {/* Caso possua dados do personagem */}
-        { props.character ? (
-          <TableRow>
-          {/* Descrição da arma */}
-          <TableCell component="th" scope="row">
-            <TextField id="filled-basic" label="Descrição" variant="standard" />
-          </TableCell>
+        {/* // Caso não tenha */}
+        <TableBody>
+        {(rowsPerPage > 0
+          ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+          : rows
+        ).map((row) => (
+          <TableRow key={row.weapon}>
+              {/* Descrição da arma */}
+            <TableCell component="th" scope="row">
+              {row.weapon}
+            </TableCell>
 
-          {/* Tipo */}
-          <TableCell style={{ minWidth: 180 }} align="right">
-            <FormControl fullWidth variant="standard">
-              <InputLabel id="demo-simple-select-label">Tipo da arma</InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={type}
-                label="Age"
-                onChange={handleChange}
-              >
-                <MenuItem value='Balistico'>Balístico</MenuItem>
-                <MenuItem value='Fisico'>Físico</MenuItem>
-                <MenuItem value='Fogo'>Fogo</MenuItem>
-              </Select>
-            </FormControl>
-          </TableCell>
+            {/* Tipo */}
+            <TableCell style={{ minWidth: 100 }} align="right">
+              {row.type}
+            </TableCell>
 
-          {/* Dano */}
-          <TableCell style={{ minWidth: 100 }} align="right">
-            <TextField id="filled-basic" label="Dano" variant="standard" />
-          </TableCell>
+            {/* Dano */}
+            <TableCell style={{ minWidth: 100 }} align="right">
+              {row.damage}
+            </TableCell>
 
-          {/* Carga atual */}
-          <TableCell style={{ minWidth: 70 }} align="right">
-            <TextField id="filled-basic" label="Carga Atual" variant="standard" />
-          </TableCell>
+            {/* Carga atual */}
+            <TableCell style={{ minWidth: 70 }} align="right">
+              {row.current_load}
+            </TableCell>
+            
+            {/* Capacidade */}
+            <TableCell style={{ minWidth: 70 }} align="right">
+              {row.total_load}
+            </TableCell>
 
-          {/* Capacidade */}
-          <TableCell style={{ minWidth: 70 }} align="right">
-            <TextField id="filled-basic" label="Carga Maxima" variant="standard" />
-          </TableCell>
+            {/* Deletar e Editar cadastro */}
+              <TableCell style={{ minWidth: 70 }} align="right">
+                  <Tooltip title="Remover item de combate">
+                      <Button variant="outlined"
+                        onClick={() => {
+                          confirmationModal.appear({
+                            title: 'Apagar item de combate',
+                            text: 'Deseja apagar este item?',
+                            data: { id: props.character.id, type: 'combat' },
+                          });
+                        }}
+                      >
+                          <DeleteIcon />
+                      </Button>
+                  </Tooltip>
+                  
+                  <Tooltip title="Editar indormações do item de combate">
+                      <Button variant="outlined" style={{ marginLeft: '5px' }}
+                        onClick={() => combatModal.appear({ operation: 'edit', character: props.character.id })}
+                      >
+                          <EditIcon />
+                      </Button>
+                  </Tooltip>
+              </TableCell>
           </TableRow>
-          ) : (
-            // Caso não tenha
-            <TableBody>
-            {(rowsPerPage > 0
-              ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              : rows
-            ).map((row) => (
-              <TableRow key={row.weapon}>
-                  {/* Descrição da arma */}
-                <TableCell component="th" scope="row">
-                  {row.weapon}
-                </TableCell>
+        ))}
 
-                {/* Tipo */}
-                <TableCell style={{ minWidth: 100 }} align="right">
-                  {row.type}
-                </TableCell>
-
-                {/* Dano */}
-                <TableCell style={{ minWidth: 100 }} align="right">
-                  {row.damage}
-                </TableCell>
-
-                {/* Carga atual */}
-                <TableCell style={{ minWidth: 70 }} align="right">
-                  {row.current}
-                </TableCell>
-                
-                {/* Capacidade */}
-                <TableCell style={{ minWidth: 70 }} align="right">
-                  {row.capacity}
-                </TableCell>
-
-                {/* Deletar e Editar cadastro */}
-                  <TableCell style={{ minWidth: 70 }} align="right">
-                      <Tooltip title="Remover item de combate">
-                          <Button variant="outlined"
-                            onClick={() => {
-                              confirmationModal.appear({
-                                title: 'Apagar item de combate',
-                                text: 'Deseja apagar este item?',
-                                data: { id: props.character, type: 'combat' },
-                              });
-                            }}
-                          >
-                              <DeleteIcon />
-                          </Button>
-                      </Tooltip>
-                      
-                      <Tooltip title="Editar indormações do item de combate">
-                          <Button variant="outlined" style={{ marginLeft: '5px' }}
-                            onClick={() => combatModal.appear({ operation: 'create', character: props.character })}
-                          >
-                              <EditIcon />
-                          </Button>
-                      </Tooltip>
-                  </TableCell>
-              </TableRow>
-            ))}
-
-            {emptyRows > 0 && (
-              <TableRow style={{ height: 53 * emptyRows }}>
-                <TableCell colSpan={5} />
-              </TableRow>
-            )}
-            </TableBody>
+        {emptyRows > 0 && (
+          <TableRow style={{ height: 53 * emptyRows }}>
+            <TableCell colSpan={5} />
+          </TableRow>
         )}
+        </TableBody>
 
-        { props.character ? (<TableFooter></TableFooter>) : (
-          <TableFooter>
-            <TableRow>
-              <TablePagination
-                rowsPerPageOptions={[5, 10, 25, { label: 'Todas', value: -1 }]}
-                colSpan={6}
-                count={rows.length}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                SelectProps={{
-                  inputProps: {
-                    'aria-label': 'Linhas por página',
-                  },
-                  native: true,
-                }}
-                onPageChange={handleChangePage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
-                ActionsComponent={TablePaginationActions}
-              />
-            </TableRow>
-          </TableFooter>
-        )}
+        <TableFooter>
+          <TableRow>
+            <TablePagination
+              rowsPerPageOptions={[5, 10, 25, { label: 'Todas', value: -1 }]}
+              colSpan={6}
+              count={rows.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              SelectProps={{
+                inputProps: {
+                  'aria-label': 'Linhas por página',
+                },
+                native: true,
+              }}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+              ActionsComponent={TablePaginationActions}
+            />
+          </TableRow>
+        </TableFooter>
 
       </Table>
     </TableContainer>
