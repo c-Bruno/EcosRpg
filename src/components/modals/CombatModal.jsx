@@ -29,6 +29,8 @@ function CombatModal({
     operation,
     character
 }) {
+    console.log(data)
+    console.log(character)
     // Definir dados do cabeçalho da tabela
     const columns = [
         { id: 'weapon', label: 'ARMA', minWidth: 150 },
@@ -59,11 +61,11 @@ function CombatModal({
         }
 
         setCombat({
-            weapon: data.combat.weapon,
-            type: data.combat.type,
-            damage: data.combat.damage,
-            current_load: data.combat.current_load,
-            total_load: data.combat.total_load,
+            weapon: data.weapon,
+            type: data.type,
+            damage: data.damage,
+            current_load: data.current_load,
+            total_load: data.total_load,
             character_id: character
         });
     }, [data]);
@@ -101,7 +103,7 @@ function CombatModal({
                     alert('Erro ao criar o item!');
                 });
         }  else if (operation === 'edit') { // Se a operação for editar
-            api.put(`/combat/${data.combat.id}`, combat)
+            api.put(`/combat/${data.id}`, combat)
                 .then(() => {
                     // Callback
                     onSubmit();
@@ -148,8 +150,9 @@ function CombatModal({
                             {/* Descrição da arma */}
                                 <TableCell component="th" scope="row">
                                     <TextField id="filled-basic" label="Descrição" variant="standard" 
+                                        autoComplete="off"
                                         defaultValue={data? (
-                                            data.combat.weapon
+                                            data.weapon
                                         ): ("")}
                                         onChange={
                                             ({ target }) => {
@@ -165,7 +168,7 @@ function CombatModal({
                                 </TableCell>
 
                                 {/* Tipo */}
-                                <TableCell style={{ minWidth: 180 }} align="right">
+                                <TableCell style={{ minWidth: 180 }} align="left">
                                     <FormControl fullWidth variant="standard">
                                         <InputLabel id="demo-simple-select-label">Tipo da arma</InputLabel>
                                         <Select
@@ -174,7 +177,7 @@ function CombatModal({
                                             // value={type}
                                             label="Tipo de arma"
                                             defaultValue={data? (
-                                                data.combat.type
+                                                data.type
                                             ): ("")}
                                             onChange={
                                                 
@@ -198,8 +201,9 @@ function CombatModal({
                                 {/* Dano */}
                                 <TableCell style={{ minWidth: 100 }} align="right">
                                     <TextField id="filled-basic" label="Dano" variant="standard" 
+                                        autoComplete="off"
                                         defaultValue={data? (
-                                            data.combat.damage
+                                            data.damage
                                         ): ("")}
                                         onChange={
                                             ({ target }) => {
@@ -217,8 +221,9 @@ function CombatModal({
                                 {/* Carga atual */}
                                 <TableCell style={{ minWidth: 70 }} align="right">
                                     <TextField id="filled-basic" label="Carga Atual" variant="standard" 
+                                        autoComplete="off"
                                         defaultValue={data? (
-                                            data.combat.current_load
+                                            data.current_load
                                         ): ("")}
                                         onChange={
                                             ({ target }) => {
@@ -236,8 +241,9 @@ function CombatModal({
                                 {/* Capacidade */}
                                 <TableCell style={{ minWidth: 70 }} align="right">
                                     <TextField id="filled-basic" label="Carga Maxima" variant="standard" 
+                                        autoComplete="off"
                                         defaultValue={data? (
-                                            data.combat.total_load
+                                            data.total_load
                                         ): ("")}
                                         onChange={
                                             ({ target }) => {
@@ -255,7 +261,6 @@ function CombatModal({
                         </TableBody>
                     </Table>
                 </TableContainer>
-                {/* <TableBox character={character} combat={combat} data={data}></TableBox> */}
             </DialogContent>
             
             <DialogActions>

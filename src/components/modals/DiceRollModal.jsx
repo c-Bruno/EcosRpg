@@ -10,8 +10,8 @@ import { api } from '../../utils'
 
 const styles = (theme) => ({
     dice: {
-        transition: '-webkit-transform .8s ease-in-out',
-        transform: 'transform .8s ease-in-out',
+        transition: 'rotate(360deg)',
+        transform: 'rotate(360deg)'
     },
 
     formarChip: {
@@ -68,7 +68,7 @@ function DiceRollModal({
         //     $('.modalDice').css('-webkit-transform', 'rotate(0deg)')
         //   }, 20000)
         }, 2000)
-      }
+    }
 
     // Rolador de dados
     function rollDice(dice) {

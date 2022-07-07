@@ -18,7 +18,10 @@ import LastPageIcon from '@mui/icons-material/LastPage';
 import TableHead from '@mui/material/TableHead';
 import { Button, Grid, Tooltip, Select, InputLabel, FormControl, TextField, MenuItem } from '@mui/material';
 import { Delete as DeleteIcon, Create as EditIcon } from '@mui/icons-material';
+import Image from 'next/image';
 import useModal from '../hooks/useModal';
+import { api } from '../utils';
+import { DiceRollModal } from '../components';
 
 import {
     EditableRow, ConfirmationModal, CombatModal
@@ -86,8 +89,8 @@ TablePaginationActions.propTypes = {
 };
 
 // Cria cada linha da coluna
-function createData(weapon, type, damage, current_load, total_load) {
-  return { weapon, type, damage, current_load, total_load };
+function createData(id, weapon, type, damage, current_load, total_load) {
+  return { id, weapon, type, damage, current_load, total_load };
 }
 
 // Definir dados do cabeçalho da tabela
@@ -100,25 +103,16 @@ const columns = [
     { id: 'options', label: '', minWidth: 100, align: 'right'},
 ];  
 
-// Linhas da tabela
-const rows = [
-  createData('Cupcake', 305, 3.7, 25, 72),
-  createData('Donut', 452, 25.0, 15, 40),
-  createData('Eclair', 262, 16.0, 0, 0),
-  createData('Frozen yoghurt', 159, 6.0, 12, 19),
-  createData('Gingerbread', 356, 16.0, 0, 0),
-  createData('Honeycomb', 408, 3.2, 15, 16),
-  createData('Ice cream sandwich', 237, 9.0, 7, 12),
-  createData('Jelly Bean', 375, 0.0, 0, 0),
-  createData('KitKat', 518, 26.0, 1, 9),
-  createData('Lollipop', 392, 0.2, 6, 10),
-  createData('Marshmallow', 318, 0, 1, 2),
-  createData('Nougat', 360, 19.0, 0, 0),
-  createData('Oreo', 437, 18.0, 0, 0),
-].sort((a, b) => (a.weapon < b.weapon ? -1 : 1)); // Ordena alfabeticamente
-
 export default function TableBox(props) {
-  console.log(props.character)
+  // Define as linhas da tabela
+  var rows = [].sort((a, b) => (a.weapon < b.weapon ? -1 : 1)); // Ordena alfabeticamente
+
+  // Mapeia os itens que vem do banco
+  const combatItems = props.character.combat;
+  combatItems.map(function(nome, i) {
+    rows.push(createData(nome.combat_id, nome.combat.weapon, nome.combat.type, nome.combat.damage, nome.combat.current_load, nome.combat.total_load))
+  });
+
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
@@ -140,7 +134,7 @@ export default function TableBox(props) {
     <CombatModal
       handleClose={close}
       data={custom.data || null}
-      character={custom}
+      character={custom.character || custom.data.character_id}
       onSubmit={() => {
         window.location.reload(false);
       }}
@@ -170,6 +164,25 @@ export default function TableBox(props) {
     />
   ));
 
+  const diceRollModal = useModal(({ close, custom }) => (
+    console.log(custom),
+    <DiceRollModal
+        amount={custom.amount}
+        onDiceRoll={rollData => {
+            const parsedData = {
+            character_id: character.id,
+            rolls: rollData.map(each => ({
+                rolled_number: each.rolled_number,
+                max_number: each.max_number
+            }))
+            }
+
+            socket.emit('dice_roll', parsedData);
+        }}
+        handleClose={close}
+    />
+));
+
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 500 }} aria-label="custom pagination table" stickyHeader >
@@ -196,8 +209,8 @@ export default function TableBox(props) {
           ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
           : rows
         ).map((row) => (
-          <TableRow key={row.weapon}>
-              {/* Descrição da arma */}
+          <TableRow key={row.id}>
+            {/* Descrição da arma */}
             <TableCell component="th" scope="row">
               {row.weapon}
             </TableCell>
@@ -209,6 +222,25 @@ export default function TableBox(props) {
 
             {/* Dano */}
             <TableCell style={{ minWidth: 100 }} align="right">
+              <Image
+                src={'/assets/dice.png'}
+                alt="Dice roll"
+                width={25}
+                height={25}
+                align={'center'}
+                style={{
+                  cursor: 'pointer',
+                  transition: '-webkit-transform .8s ease-in-out',
+                  transform: 'transform .8s ease-in-out',
+              
+                  "&:hover":{
+                    transition: 'rotate(360deg)',
+                    transform: 'rotate(360deg)'
+                  }
+                }}
+
+                onClick={() => diceRollModal.appear({amount: row.damage})}
+              />
               {row.damage}
             </TableCell>
 
@@ -230,7 +262,7 @@ export default function TableBox(props) {
                           confirmationModal.appear({
                             title: 'Apagar item de combate',
                             text: 'Deseja apagar este item?',
-                            data: { id: props.character.id, type: 'combat' },
+                            data: { id: row.id, type: 'combat' },
                           });
                         }}
                       >
@@ -240,7 +272,7 @@ export default function TableBox(props) {
                   
                   <Tooltip title="Editar indormações do item de combate">
                       <Button variant="outlined" style={{ marginLeft: '5px' }}
-                        onClick={() => combatModal.appear({ operation: 'edit', character: props.character.id })}
+                        onClick={() => combatModal.appear({ operation: 'edit', character: props.character.id, data: row })}
                       >
                           <EditIcon />
                       </Button>
