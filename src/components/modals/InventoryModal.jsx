@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { withStyles } from '@mui/styles';
 import {
     TextField, Dialog, DialogActions, DialogContent, Grid,
-    DialogTitle, Button
+    DialogTitle, Button, Snackbar
 } from '@mui/material'
 
 import { api } from '../../utils';
@@ -18,7 +18,8 @@ function InventoryModal({
     onSubmit,
     data,
     operation,
-    character
+    character, 
+    totalSpace
 }) {
     const [inventory, setInventory] = useState({
         description: '',
@@ -47,7 +48,19 @@ function InventoryModal({
     }
 
     const submit = () => {
-        if(!inventory.description) {
+        if(!inventory.description || !inventory.weight) { // Verifica se a descrição e peso esta preenchida
+            alert('Preencha todos os campos');
+            // return (<Snackbar
+            //     open={open}
+            //     autoHideDuration={6000}
+            //     onClose={handleClose}
+            //     message="Preencha a Descrição e o Peso"
+            // />)
+            return;
+        }
+
+        if (inventory.weight > totalSpace){ // Verifica se o novo item cabe no inventario
+            alert('Este item não cabe no inventario');
             return;
         }
 

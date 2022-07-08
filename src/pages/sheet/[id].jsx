@@ -258,6 +258,7 @@ function Sheet({
       handleClose={close}
       data={custom.data || null}
       character={custom.character || custom.data.character_id}
+      totalSpace={custom.space}
       onSubmit={() => {
         window.location.reload(false);
       }}
@@ -339,6 +340,28 @@ function Sheet({
       }
     } else {
       return `/assets/character.png`
+    }
+  }
+
+  const calcSpaceInventory = () => {
+    var totalSpace = 10; // Inicia com 10 espaços no inventario
+    var ocupedSpaces = 0; // Inicializa espaços ocupados com 0 
+
+    if(!character) {
+      return null;
+    } else if (character.skills) {
+
+      character.skills.map(function(item, i) { // Checar a carga maxima disponivel para o inventario
+        if(item.skill.name.toUpperCase().match("FORÇA") || item.skill.name.toUpperCase().match("FORCA") ){
+          totalSpace += Number(item.value) * 2; // Para cada ponto de força, o personagem ganha mais 2 espaços no invetario
+        }
+      })
+
+      character.inventory.map(function(item, i) { // Verifica quanto já esta ocupado
+        ocupedSpaces += Number(item.inventory.weight);
+      })
+
+      return (totalSpace - ocupedSpaces);
     }
   }
 
@@ -464,7 +487,7 @@ function Sheet({
                     }}
                     
                     // Botão para criar novo item
-                    onClick={() => inventoryModal.appear({ operation: 'create', character: character.id })}
+                    onClick={() => inventoryModal.appear({ operation: 'create', character: character.id, space: calcSpaceInventory()})}
                   >
                     <AddIcon/>
                   </Button>
@@ -500,7 +523,7 @@ function Sheet({
                   <Grid item md={3} xs={12}>
                     <TextField
                         disabled 
-                        label="(9 Livre)"
+                        label={`(${calcSpaceInventory()} LIVRE)`}
                         variant="standard"
                         fullWidth
                     />
