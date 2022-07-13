@@ -6,6 +6,7 @@ import {
 } from '@mui/material'
 
 import { api } from '../../utils';
+import { toast, ToastContainer } from 'react-toastify';
 
 const styles = theme => ({
 
@@ -59,7 +60,7 @@ function SkillModal({
                     resetState();
                 })
                 .catch(() => {
-                    alert('Erro ao criar a perícia!');
+                    toast.error('Erro ao criar a perícia!');
                 });
         }
         else if (operation === 'edit') {
@@ -74,7 +75,7 @@ function SkillModal({
                     resetState();
                 })
                 .catch(() => {
-                    alert('Erro ao editar a perícia!');
+                    toast.error('Erro ao editar a perícia!');
                 });
         }
     }

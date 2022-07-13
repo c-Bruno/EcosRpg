@@ -23,6 +23,7 @@ import {
 } from '../../components/forms';
 
 import useModal from '../../hooks/useModal';
+import { toast, ToastContainer } from 'react-toastify';
 
 import { prisma } from '../../database';
 
@@ -128,7 +129,7 @@ function Sheet({
           socket.emit('update_hit_points', { character_id: character.id, current: data.current_hit_points, max: data.max_hit_points });
         })
         .catch(err => {
-          alert(`Erro ao atualizar a vida!`, err);
+          toast.error(`Erro ao atualizar a vida!`, err);
 
           reject();
         });
@@ -153,7 +154,7 @@ function Sheet({
           socket.emit('update_hit_points', { character_id: character.id, current: data.current_sanity_points, max: data.max_sanity_points });
         })
         .catch(err => {
-          alert(`Erro ao atualizar a sanidade!`, err);
+          toast.error(`Erro ao atualizar a sanidade!`, err);
 
           reject();
         });
@@ -187,7 +188,7 @@ function Sheet({
             window.location.reload(false);
           })
           .catch(() => {
-            alert(`Erro ao apagar: ${type}`);
+            toast.error(`Erro ao apagar: ${type}`);
           });
       }}
     />
@@ -320,7 +321,7 @@ function Sheet({
       console.log(value.target.value)
       api.put(`/character/${character.id}`, {specialItem: value.target.value})
         .then(() => {})
-        .catch(() => { alert(`Erro ao atualizar o item especial!`);
+        .catch(() => { toast.error(`Erro ao atualizar o item especial!`);
       });
    }, 5000);
   }
@@ -538,7 +539,7 @@ function Sheet({
                         data={inventory}
                         // Atualizar informação do item do inventario
                         editRow={(data) => {
-                          inventoryModal.appear({ operation: 'edit', data });
+                          inventoryModal.appear({ operation: 'edit', data, space: calcSpaceInventory() });
                         }}
                         
                         // Deletar item do inventario
@@ -576,7 +577,7 @@ function Sheet({
                               value: newValue
                             })
                             .catch(err => {
-                              alert(`Erro ao atualizar o valor! Erro: ${err.toString()}`);
+                              toast.error(`Erro ao atualizar o valor! Erro: ${err.toString()}`);
                             })
                           }}
                           onInput={newValue => {
@@ -610,7 +611,7 @@ function Sheet({
               
               <TableBox character={character}></TableBox>
             </Section>
-          </Grid>
+            </Grid>
             
             {/* Item especial */}
             <Grid item xs={12} md={4}>
@@ -652,7 +653,7 @@ function Sheet({
                               value: newValue
                             })
                             .catch(err => {
-                              alert(`Erro ao atualizar o valor! Erro: ${err.toString()}`);
+                              toast.error(`Erro ao atualizar o valor! Erro: ${err.toString()}`);
                             })
                           }}
                           onInput={newValue => {
@@ -667,7 +668,7 @@ function Sheet({
             </Grid>
           </Grid>
         </Grid>
-      </Container>
+    </Container>
   )
 }
 

@@ -5,6 +5,7 @@ import {
     DialogTitle, Button, Grid, Link
 } from '@mui/material'
 
+import { toast, ToastContainer } from 'react-toastify';
 import { api } from '../../utils';
 
 const styles = theme => ({
@@ -37,31 +38,37 @@ function ChangePictureModal({
 
 
         if(!pictureURLs.standard_character_picture_url.includes('discord') || !pictureURLs.standard_character_picture_url.includes('imgur')) {
-            return window.alert('Preencha as duas artes com URLs válidas!');
+            toast.error('Preencha as duas artes com URLs validas!');
+            return;
         }
 
         if(!pictureURLs.injured_character_picture_url.includes('discord') || !pictureURLs.injured_character_picture_url.includes('imgur')) {
-            
+            toast.error('Preencha as duas artes com URLs validas!');
+            return;
         }
     }
 
     const submit = () => {
         if(!pictureURLs.injured_character_picture_url || !pictureURLs.standard_character_picture_url) {
-            return window.alert('Preencha as duas artes!');
+            toast.error('Preencha as duas artes!');
+            return;
         }
 
         const allowedWebsites = ['discord', 'imgur'];
 
         if(!allowedWebsites.some(website => pictureURLs.injured_character_picture_url.includes(website))) {
-            return window.alert('Preencha as duas artes com URLs válidas!');
+            toast.error('Preencha as duas artes com URLs validas!');
+            return;
         }
 
         if(!allowedWebsites.some(website => pictureURLs.standard_character_picture_url.includes(website))) {
-            return window.alert('Preencha as duas artes com URLs válidas!');
+            toast.error('Preencha as duas artes com URLs validas!');
+            return;
         }
 
         if(!pictureURLs.injured_character_picture_url.endsWith('.png') && !pictureURLs.standard_character_picture_url.endsWith('.png')) {
-            return window.alert('As artes precisam estar em formato PNG.');
+            toast.error('As artes precisam estar em formato PNG.');
+            return;
         }
 
         api.put(`/character/${character.id}`, {

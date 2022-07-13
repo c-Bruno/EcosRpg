@@ -15,6 +15,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import TableHead from '@mui/material/TableHead';
+import { toast, ToastContainer } from 'react-toastify';
 
 const styles = theme => ({
 
@@ -100,7 +101,7 @@ function CombatModal({
                     resetState();
                 })
                 .catch(() => {
-                    alert('Erro ao criar o item!');
+                    toast.error('Erro ao criar o item!');
                 });
         }  else if (operation === 'edit') { // Se a operação for editar
             api.put(`/combat/${data.id}`, combat)
@@ -114,7 +115,7 @@ function CombatModal({
                     resetState();
                 })
                 .catch(err => {
-                    alert('Erro ao editar o item!');
+                    toast.error('Erro ao editar o item!');
                 });
         }
     }

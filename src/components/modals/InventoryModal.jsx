@@ -5,6 +5,8 @@ import {
     DialogTitle, Button, Snackbar
 } from '@mui/material'
 
+import { toast, ToastContainer } from 'react-toastify';
+
 import { api } from '../../utils';
 
 const styles = theme => ({
@@ -49,18 +51,12 @@ function InventoryModal({
 
     const submit = () => {
         if(!inventory.description || !inventory.weight) { // Verifica se a descrição e peso esta preenchida
-            alert('Preencha todos os campos');
-            // return (<Snackbar
-            //     open={open}
-            //     autoHideDuration={6000}
-            //     onClose={handleClose}
-            //     message="Preencha a Descrição e o Peso"
-            // />)
+            toast.error('Preencha todos os campos');
             return;
         }
 
         if (inventory.weight > totalSpace){ // Verifica se o novo item cabe no inventario
-            alert('Este item não cabe no inventario');
+            toast.error('Este item não cabe no seu inventário');
             return;
         }
 
@@ -78,7 +74,7 @@ function InventoryModal({
                     resetState();
                 })
                 .catch(() => {
-                    alert('Erro ao criar o item!');
+                    toast.error('Erro ao criar o item!');
                 });
         }  else if (operation === 'edit') { // Se a operação for editar
             api.put(`/inventory/${data.inventory.id}`, inventory)
@@ -92,7 +88,7 @@ function InventoryModal({
                     resetState();
                 })
                 .catch(err => {
-                    alert('Erro ao editar o item!');
+                    toast.error('Erro ao editar o item!');
                 });
         }
     }

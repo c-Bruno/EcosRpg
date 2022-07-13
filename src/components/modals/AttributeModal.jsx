@@ -5,6 +5,7 @@ import {
     DialogTitle, Button
 } from '@mui/material'
 
+import { toast, ToastContainer } from 'react-toastify';
 import { api } from '../../utils';
 
 const styles = theme => ({
@@ -59,7 +60,7 @@ function AttributeModal({
                     resetState();
                 })
                 .catch(() => {
-                    alert('Erro ao criar o atributo!');
+                    toast.error('Erro ao criar o atributo!');
                 });
         }
         else if (operation === 'edit') {
@@ -74,7 +75,7 @@ function AttributeModal({
                     resetState();
                 })
                 .catch(err => {
-                    alert('Erro ao editar o atributo!');
+                    toast.error('Erro ao editar o atributo!');
                 });
         }
     }

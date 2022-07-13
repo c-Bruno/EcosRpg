@@ -25,8 +25,9 @@ import { DiceRollModal } from '../components';
 
 import {
     EditableRow, ConfirmationModal, CombatModal
-  } from '../components';
+} from '../components';
 
+import { toast, ToastContainer } from 'react-toastify';
 function TablePaginationActions(props) {
   const theme = useTheme();
   const { count, page, rowsPerPage, onPageChange } = props;
@@ -158,7 +159,7 @@ export default function TableBox(props) {
             window.location.reload(false);
           })
           .catch(() => {
-            alert(`Erro ao apagar: ${type}`);
+            toast.error(`Erro ao apagar: ${type}`);
           });
       }}
     />
