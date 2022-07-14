@@ -223,7 +223,7 @@ export default function TableBox(props) {
 
             {/* Dano */}
             <TableCell style={{ minWidth: 100 }} align="right">
-              <img
+              <Image
                 src={'/assets/dice.png'}
                 alt="Dice roll"
                 width={25}

@@ -9,7 +9,7 @@ import {
 
 import { Header, Section, CharacterBox, AddBox,
   CreateCharacterModal, ConfirmationModal, EditableRow,
-  AttributeModal, SkillModal, TransferItemsList
+  AttributeModal, SkillModal
 } from '../../components';
 
 import { api } from '../../utils';
