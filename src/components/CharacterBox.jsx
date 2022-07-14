@@ -9,7 +9,9 @@ import {
   Delete as DeleteIcon,
   Favorite as HeartIcon,
   FavoriteBorder as HeartIconNoLife,
-  VideoCameraFront as CameraIcon
+  VideoCameraFront as CameraIcon,
+  Chair as SanityIcon,
+  ChairAltOutlined as SanityIconEmpty
 } from '@mui/icons-material';
 
 import useModal from '../hooks/useModal';
@@ -96,6 +98,7 @@ function CharacterBox({ classes, character, deleteCharacter, ...rest }) {
       <div className={classes.mainInformations}>
         {/* Nome do personagem */}
         <span className={classes.characterName}>{character.name} (ID: {character.id})</span>
+
         {/* Vida resumida */}
         <div
           style={{
@@ -115,6 +118,7 @@ function CharacterBox({ classes, character, deleteCharacter, ...rest }) {
             {character.current_hit_points}/{character.max_hit_points}
           </span>
         </div>
+
         <div
           style={{
             display: 'flex',
@@ -124,6 +128,7 @@ function CharacterBox({ classes, character, deleteCharacter, ...rest }) {
             marginTop: '10px'
           }}
         >
+          {/* Adicionar novo personagem */}
           <div>
             <Button
               variant="outlined"
@@ -134,7 +139,9 @@ function CharacterBox({ classes, character, deleteCharacter, ...rest }) {
               <LinkIcon />
             </Button>
           </div>
-          <div>
+
+          {/* Configuração OBS */}
+          {/* <div>
             <Button
               variant="outlined"
               className={classes.btn}
@@ -142,7 +149,9 @@ function CharacterBox({ classes, character, deleteCharacter, ...rest }) {
             >
               <CameraIcon />
             </Button>
-          </div>
+          </div> */}
+
+          {/* Deletar personagem */}
           <div>
             <Button
               variant="outlined"
