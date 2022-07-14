@@ -233,7 +233,6 @@ export default function TableBox(props) {
                   cursor: 'pointer',
                   transition: '-webkit-transform .8s ease-in-out',
                   transform: 'transform .8s ease-in-out',
-                  marginRight: '5px',
               
                   "&:hover":{
                     transition: 'rotate(360deg)',
