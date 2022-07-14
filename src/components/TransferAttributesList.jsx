@@ -132,4 +132,15 @@ export default function TransferAttributesList(props) {
         </Card>
     );
 
+    return (
+        <Grid container spacing={2} justifyContent="center" alignItems="center">
+            {/* Primeira lista com atributos não classificados */}
+            <Grid item>{customList('Não classificadas', UngroupedAttributes)}</Grid>
+
+            {/* Lista de cada atributo por preicia */}
+            {props.skills.map((skill, index) => (
+                <Grid item>{customList(skill.name, right)}</Grid> 
+            ))}
+        </Grid>
+    );
 }
