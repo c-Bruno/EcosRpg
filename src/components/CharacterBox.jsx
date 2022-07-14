@@ -99,24 +99,48 @@ function CharacterBox({ classes, character, deleteCharacter, ...rest }) {
         {/* Nome do personagem */}
         <span className={classes.characterName}>{character.name} (ID: {character.id})</span>
 
-        {/* Vida resumida */}
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            color: '#E80A67',
-            gap: '3px',
-          }}
-        >
-          {character.current_hit_points === 0 ? (
-            <HeartIconNoLife />
-          ) : (
-            <HeartIcon />
-          )}
-          <span className={classes.hpInfo}>
-            {character.current_hit_points}/{character.max_hit_points}
-          </span>
+        <div>
+          {/* Vida resumida */}
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              color: '#E80A67',
+              gap: '3px',
+              float: 'left',
+              marginRight: "10px"
+            }}
+          >
+            {character.current_hit_points === 0 ? (
+              <HeartIconNoLife />
+            ) : (
+              <HeartIcon />
+            )}
+            <span className={classes.hpInfo}>
+              {character.current_hit_points}/{character.max_hit_points}
+            </span>
+          </div>
+            
+          {/* Sanidade Resumida resumida */}
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              color: '#1e45b6',
+              gap: '3px',
+            }}
+          >
+            {character.current_sanity_points === 0 ? (
+              <SanityIconEmpty/>
+            ) : (
+              <SanityIcon/>
+            )}
+            <span className={classes.hpInfo}>
+              {character.current_sanity_points}/{character.max_sanity_points}
+            </span>
+          </div>
         </div>
 
         <div
