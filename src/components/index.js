@@ -31,7 +31,6 @@ export {
     Section,
     CharacterBox,
     AddBox,
-    TransferAttributesList,
 
     CreateCharacterModal,
     ConfirmationModal,
