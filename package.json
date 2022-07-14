@@ -7,7 +7,7 @@
   },
   "scripts": {
     "dev": "node src/server.js",
-    "build": "next build",
+    "build": "node --max_old_space_size=2560 node_modules/.bin/react-scripts build",
     "start": "node src/server.js",
     "lint": "next lint",
     "heroku-postbuild": "npx prisma migrate deploy && next build"
