@@ -9,7 +9,7 @@ import {
 
 import { Header, Section, CharacterBox, AddBox,
   CreateCharacterModal, ConfirmationModal, EditableRow,
-  AttributeModal, SkillModal
+  AttributeModal, SkillModal, TransferAttributesList
 } from '../../components';
 
 import { api } from '../../utils';
@@ -305,6 +305,7 @@ function Dashboard({
                 <Grid item xs={12}>
                   <Section title="Classificação de atributos    " image="/assets/groupAttibutes.png">
                     <Grid item container xs={12} spacing={2}>
+                      <TransferAttributesList attributes={attributes} skills={skills}></TransferAttributesList>
                     </Grid>
                     </Section>
                 </Grid>
