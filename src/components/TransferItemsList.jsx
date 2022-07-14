@@ -166,7 +166,7 @@ export default function TransferList(props) {
 
             {/* Lista de cada atributo por preicia */}
             {props.skills.map((skill, index) => (
-                <Grid item>{customList(skill.name, right)}</Grid>
+                <Grid item>{customList(skill.name, right)}</Grid> 
             ))}
         </Grid>
     );
