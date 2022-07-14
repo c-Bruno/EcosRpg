@@ -8,7 +8,8 @@ import {
   Link as LinkIcon,
   Delete as DeleteIcon,
   Favorite as HeartIcon,
-  FavoriteBorder as HeartIconNoLife
+  FavoriteBorder as HeartIconNoLife,
+  VideoCameraFront as CameraIcon
 } from '@mui/icons-material';
 
 import useModal from '../hooks/useModal';
@@ -95,51 +96,25 @@ function CharacterBox({ classes, character, deleteCharacter, ...rest }) {
       <div className={classes.mainInformations}>
         {/* Nome do personagem */}
         <span className={classes.characterName}>{character.name} (ID: {character.id})</span>
-
-        <div class="row">
-          {/* Vida resumida */}
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              color: '#E80A67',
-              gap: '3px',
-              float: 'left',
-              marginRight: "10px"
-            }}
-          >
-            {character.current_hit_points === 0 ? (
-              <HeartIconNoLife/>
-            ) : (
-              <HeartIcon/>
-            )}
-            <span className={classes.hpInfo}>
-              {character.current_hit_points}/{character.max_hit_points}
-            </span>
-          </div>
-          
-          {/* Sanidade Resumida resumida */}
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              color: '#1e45b6',
-              gap: '3px',
-            }}
-          >
-            {character.current_sanity_points === 0 ? (
-              <HeartIconNoLife/>
-            ) : (
-              <HeartIcon/>
-            )}
-            <span className={classes.hpInfo}>
-              {character.current_sanity_points}/{character.max_sanity_points}
-            </span>
-          </div>
+        {/* Vida resumida */}
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            color: '#E80A67',
+            gap: '3px',
+          }}
+        >
+          {character.current_hit_points === 0 ? (
+            <HeartIconNoLife />
+          ) : (
+            <HeartIcon />
+          )}
+          <span className={classes.hpInfo}>
+            {character.current_hit_points}/{character.max_hit_points}
+          </span>
         </div>
-
         <div
           style={{
             display: 'flex',
@@ -149,7 +124,6 @@ function CharacterBox({ classes, character, deleteCharacter, ...rest }) {
             marginTop: '10px'
           }}
         >
-          {/* Acessar personagem já criado */}
           <div>
             <Button
               variant="outlined"
@@ -160,9 +134,7 @@ function CharacterBox({ classes, character, deleteCharacter, ...rest }) {
               <LinkIcon />
             </Button>
           </div>
-
-          {/* Configuração para o OBS */}
-          {/* <div>
+          <div>
             <Button
               variant="outlined"
               className={classes.btn}
@@ -170,9 +142,7 @@ function CharacterBox({ classes, character, deleteCharacter, ...rest }) {
             >
               <CameraIcon />
             </Button>
-          </div> */}
-
-          {/* Deletear personagem criado */}
+          </div>
           <div>
             <Button
               variant="outlined"
