@@ -22,7 +22,7 @@ function union(a, b) {
   return [...a, ...not(b, a)];
 }
 
-export default function TransferList(props) {
+export default function TransferAttributesList(props) {
     console.log(props.attributes)
     console.log(props.skills)
 
