@@ -2,6 +2,9 @@
   "name": "open-source-rpg-app",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "14.x"
+  },
   "scripts": {
     "dev": "node src/server.js",
     "build": "next build",
