@@ -165,6 +165,12 @@ export default function TransferAttributesList(props) {
                     </Button>
                 </Grid>
             </Grid>
+
+            {/* Lista de cada atributo por preicia */}
+
+                <Grid item>
+                    {customList(skill.name, right)}
+                </Grid> 
         </Grid>
     );
 }
