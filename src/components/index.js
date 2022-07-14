@@ -18,7 +18,7 @@ import ChangePictureModal from './modals/ChangePictureModal'
 import EditableRow from './EditableRow'
 import SheetEditableRow from './SheetEditableRow'
 import TableBox from './TableBox'
-import TransferItemsList from './TransferItemsList'
+// import TransferItemsList from './TransferItemsList'
 
 import Loader from './Loader'
 
@@ -47,7 +47,7 @@ export {
     EditableRow,
     TableBox,
     Loader,
-    TransferItemsList,
+    // TransferItemsList,
 
     StatusBar,
 
