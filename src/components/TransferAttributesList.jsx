@@ -135,12 +135,36 @@ export default function TransferAttributesList(props) {
     return (
         <Grid container spacing={2} justifyContent="center" alignItems="center">
             {/* Primeira lista com atributos não classificados */}
-            <Grid item>{customList('Não classificadas', UngroupedAttributes)}</Grid>
+            <Grid item>
+                {customList('Não classificadas', UngroupedAttributes)}
+            </Grid>
 
-            {/* Lista de cada atributo por preicia */}
-            {props.skills.map((skill, index) => (
-                <Grid item>{customList(skill.name, right)}</Grid> 
-            ))}
+            {/* Botões para manipular elementos através das listas */}
+            <Grid item>
+                <Grid container direction="column" alignItems="center">
+                    <Button
+                        sx={{ my: 0.5 }}
+                        variant="outlined"
+                        size="small"
+                        onClick={handleCheckedRight}
+                        disabled={leftChecked.length === 0}
+                        aria-label="mover selecionado"
+                    >
+                        &gt;
+                    </Button>
+
+                    <Button
+                        sx={{ my: 0.5 }}
+                        variant="outlined"
+                        size="small"
+                        onClick={handleCheckedLeft}
+                        disabled={rightChecked.length === 0}
+                        aria-label="mover selecionado"
+                    >
+                        &lt;
+                    </Button>
+                </Grid>
+            </Grid>
         </Grid>
     );
 }
