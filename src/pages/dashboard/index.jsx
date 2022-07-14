@@ -302,6 +302,13 @@ function Dashboard({
                   </Section>
                 </Grid>
 
+                <Grid item xs={12}>
+                  <Section title="Classificação de atributos    " image="/assets/groupAttibutes.png">
+                    <Grid item container xs={12} spacing={2}>
+                    </Grid>
+                    </Section>
+                </Grid>
+
                 {/* Configurações */}
                 <Grid item xs={12}>
                   <Section
