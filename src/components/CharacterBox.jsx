@@ -9,9 +9,9 @@ import {
   Delete as DeleteIcon,
   Favorite as HeartIcon,
   FavoriteBorder as HeartIconNoLife,
-  // VideoCameraFront as CameraIcon,
-  // Chair as SanityIcon,
-  // ChairAltOutlined as SanityIconEmpty,
+  VideoCameraFront as CameraIcon,
+  Chair as SanityIcon,
+  ChairAltOutlined as SanityIconEmpty,
 } from '@mui/icons-material';
 
 import useModal from '../hooks/useModal';
@@ -123,7 +123,7 @@ function CharacterBox({ classes, character, deleteCharacter, ...rest }) {
           </div>
           
           {/* Sanidade Resumida resumida */}
-          {/* <div
+          <div
             style={{
               display: 'flex',
               alignItems: 'center',
@@ -140,7 +140,7 @@ function CharacterBox({ classes, character, deleteCharacter, ...rest }) {
             <span className={classes.hpInfo}>
               {character.current_sanity_points}/{character.max_sanity_points}
             </span>
-          </div> */}
+          </div>
         </div>
 
         <div
