@@ -166,10 +166,7 @@ export default function TransferAttributesList(props) {
                 </Grid>
             </Grid>
 
-            {/* Lista de cada atributo por preicia */}
-            {(props.skills).map((skill) => (
-               <div></div>
-            ))}
+
         </Grid>
     );
 }
