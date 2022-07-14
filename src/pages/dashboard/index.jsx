@@ -184,7 +184,7 @@ function Dashboard({
           {
             configs.length > 0 ? (
               <>
-                {/* Personagens cadastrados */}
+              {/* Personagens disponiveis */}
                 <Grid item xs={12}>
                   <Section
                     title="Fichas de personagens      " image="/assets/characters.png" 
@@ -211,7 +211,7 @@ function Dashboard({
                   </Section>
                 </Grid>
 
-                {/* Lista de ATRIBUTOS adicionadas e opção para adicionar novos */}
+                {/* Lista de ATRIBUTOS adicionadas e opção para adicionar */}
                 <Grid item xs={12} md={6}>
                   <Section
                     title="Atributos   " image="/assets/atributes.png"
@@ -257,7 +257,7 @@ function Dashboard({
                   </Section>
                 </Grid>
 
-                {/* Lista de PERICIAS adicionadas e opção para adicionar novas*/}
+                {/* Lista de PERICIAS adicionadas e opção para adicionar */}
                 <Grid item xs={12} md={6}>
                   <Section
                     title="Perícias   " image="/assets/expertise.png"
@@ -302,18 +302,17 @@ function Dashboard({
                   </Section>
                 </Grid>
 
-                {/* Atributos classificados por pericias */}
-                <Grid item xs={12}>
-                  <Section title="Classificação de atributos    " image="/assets/groupAttibutes.png">
-                    <Grid item container xs={12} spacing={2}>
-                    </Grid>
-                    </Section>
-                </Grid>
-
                 {/* Configurações */}
                 <Grid item xs={12}>
-                  <Section title="Configurações">
-                    <Grid item container xs={12} spacing={2}>
+                  <Section
+                    title="Configurações"
+                  >
+                    <Grid
+                      item
+                      container
+                      xs={12}
+                      spacing={2}
+                    >
                         <Grid container spacing={2} item xs={12}>
                           {/* <Grid item xs={12}>
                             <h4>Integração com OBS</h4>
