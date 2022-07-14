@@ -223,7 +223,7 @@ export default function TableBox(props) {
 
             {/* Dano */}
             <TableCell style={{ minWidth: 100 }} align="right">
-              <Image
+              <img
                 src={'/assets/dice.png'}
                 alt="Dice roll"
                 width={25}
@@ -233,6 +233,7 @@ export default function TableBox(props) {
                   cursor: 'pointer',
                   transition: '-webkit-transform .8s ease-in-out',
                   transform: 'transform .8s ease-in-out',
+                  marginRight: '4px',
               
                   "&:hover":{
                     transition: 'rotate(360deg)',
