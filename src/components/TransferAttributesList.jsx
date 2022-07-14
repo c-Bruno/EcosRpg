@@ -71,5 +71,65 @@ export default function TransferAttributesList(props) {
         setChecked(not(checked, rightChecked));
     };
 
-    
+    const customList = (title, items) => (
+        <Card>
+        <CardHeader
+            sx={{ px: 2, py: 1 }}
+            avatar={
+                <Checkbox
+                    onClick={handleToggleAll(items)}
+                    checked={numberOfChecked(items) === items.length && items.length !== 0}
+                    indeterminate={
+                    numberOfChecked(items) !== items.length && numberOfChecked(items) !== 0
+                    }
+                    disabled={items.length === 0}
+                    inputProps={{
+                    'aria-label': 'todos os itens selecionados',
+                    }}
+                />
+            }
+            title={title}
+            subheader={`${numberOfChecked(items)}/${items.length} selecionado`}
+        />
+        <Divider />
+        <List
+            sx={{
+            width: 300,
+            height: 230,
+            bgcolor: 'background.paper',
+            overflow: 'auto',
+            }}
+            dense
+            component="div"
+            role="list"
+        >
+            {items.map((value) => {
+            const labelId = `transfer-list-all-item-${value}-label`;
+
+            return (
+                <ListItem
+                    key={value}
+                    role="listitem"
+                    button
+                    onClick={handleToggle(value)}
+                    >
+                    <ListItemIcon>
+                        <Checkbox
+                        checked={checked.indexOf(value) !== -1}
+                        tabIndex={-1}
+                        disableRipple
+                        inputProps={{
+                            'aria-labelledby': labelId,
+                        }}
+                        />
+                    </ListItemIcon>
+                    <ListItemText id={labelId} primary={value} />
+                </ListItem>
+            );
+            })}
+            <ListItem />
+        </List>
+        </Card>
+    );
+
 }
