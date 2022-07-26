@@ -166,7 +166,14 @@ export default function TransferAttributesList(props) {
                 </Grid>
             </Grid>
 
-
+            {/* Lista de cada atributo por preicia */}
+            {(props.skills) ? (
+                (props.skills).map((skill) => (
+                <Grid item>
+                    {customList(skill.name, right)}
+                </Grid> 
+                ))
+            ): (console.log("Não tem skill"))}
         </Grid>
     );
 }
