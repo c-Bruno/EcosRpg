@@ -206,82 +206,82 @@ export default function TableBox(props) {
         {/* Caso possua dados do personagem */}
         {/* // Caso não tenha */}
         <TableBody>
-        {(rowsPerPage > 0
-          ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-          : rows
-        ).map((row) => (
-          <TableRow key={row.id}>
-            {/* Descrição da arma */}
-            <TableCell component="th" scope="row">
-              {row.weapon}
-            </TableCell>
-
-            {/* Tipo */}
-            <TableCell style={{ minWidth: 100 }} align="right">
-              {row.type}
-            </TableCell>
-
-            {/* Dano */}
-            <TableCell style={{ minWidth: 100 }} align="right">
-              <img
-                src={'/assets/dice.png'}
-                alt="Dice roll"
-                width={25}
-                height={25}
-                align={'center'}
-                style={{
-                  cursor: 'pointer',
-                  transition: '-webkit-transform .8s ease-in-out',
-                  transform: 'transform .8s ease-in-out',
-                  marginRight: '5px',
-              
-                  "&:hover":{
-                    transition: 'rotate(360deg)',
-                    transform: 'rotate(360deg)'
-                  }
-                }}
-
-                onClick={() => diceRollModal.appear({amount: row.damage})}
-              />
-              {row.damage}
-            </TableCell>
-
-            {/* Carga atual */}
-            <TableCell style={{ minWidth: 70 }} align="right">
-              {row.current_load}
-            </TableCell>
-            
-            {/* Capacidade */}
-            <TableCell style={{ minWidth: 70 }} align="right">
-              {row.total_load}
-            </TableCell>
-
-            {/* Deletar e Editar cadastro */}
-              <TableCell style={{ minWidth: 70 }} align="right">
-                  <Tooltip title="Remover item de combate">
-                      <Button variant="outlined"
-                        onClick={() => {
-                          confirmationModal.appear({
-                            title: 'Apagar item de combate',
-                            text: 'Deseja apagar este item?',
-                            data: { id: row.id, type: 'combat' },
-                          });
-                        }}
-                      >
-                          <DeleteIcon />
-                      </Button>
-                  </Tooltip>
-                  
-                  <Tooltip title="Editar indormações do item de combate">
-                      <Button variant="outlined" style={{ marginLeft: '5px' }}
-                        onClick={() => combatModal.appear({ operation: 'edit', character: props.character.id, data: row })}
-                      >
-                          <EditIcon />
-                      </Button>
-                  </Tooltip>
+          {(rowsPerPage > 0
+            ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+            : rows
+          ).map((row) => (
+            <TableRow key={row.id}>
+              {/* Descrição da arma */}
+              <TableCell component="th" scope="row">
+                {row.weapon}
               </TableCell>
-          </TableRow>
-        ))}
+
+              {/* Tipo */}
+              <TableCell style={{ minWidth: 100 }} align="right">
+                {row.type}
+              </TableCell>
+
+              {/* Dano */}
+              <TableCell style={{ minWidth: 100 }} align="right">
+                <img
+                  src={'/assets/dice.png'}
+                  alt="Dice roll"
+                  width={25}
+                  height={25}
+                  align={'center'}
+                  style={{
+                    cursor: 'pointer',
+                    transition: '-webkit-transform .8s ease-in-out',
+                    transform: 'transform .8s ease-in-out',
+                    marginRight: '5px',
+                
+                    "&:hover":{
+                      transition: 'rotate(360deg)',
+                      transform: 'rotate(360deg)'
+                    }
+                  }}
+
+                  onClick={() => diceRollModal.appear({amount: row.damage})}
+                />
+                {row.damage}
+              </TableCell>
+
+              {/* Carga atual */}
+              <TableCell style={{ minWidth: 70 }} align="right">
+                {row.current_load}
+              </TableCell>
+              
+              {/* Capacidade */}
+              <TableCell style={{ minWidth: 70 }} align="right">
+                {row.total_load}
+              </TableCell>
+
+              {/* Deletar e Editar cadastro */}
+                <TableCell style={{ minWidth: 70 }} align="right">
+                    <Tooltip title="Remover item de combate">
+                        <Button variant="outlined"
+                          onClick={() => {
+                            confirmationModal.appear({
+                              title: 'Apagar item de combate',
+                              text: 'Deseja apagar este item?',
+                              data: { id: row.id, type: 'combat' },
+                            });
+                          }}
+                        >
+                            <DeleteIcon />
+                        </Button>
+                    </Tooltip>
+                    
+                    <Tooltip title="Editar indormações do item de combate">
+                        <Button variant="outlined" style={{ marginLeft: '5px' }}
+                          onClick={() => combatModal.appear({ operation: 'edit', character: props.character.id, data: row })}
+                        >
+                            <EditIcon />
+                        </Button>
+                    </Tooltip>
+                </TableCell>
+            </TableRow>
+          ))}
 
         {emptyRows > 0 && (
           <TableRow style={{ height: 53 * emptyRows }}>

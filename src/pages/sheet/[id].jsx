@@ -67,11 +67,15 @@ export const getServerSideProps = async ({ params }) => {
     }
   });
 
-  console.log(character)
+  // character.attributes.sort(function(a,b){
+  //   console.log(a.attribute.name + "-" + b.attribute.name)
+  //   return a.attribute.name - b.attribute.name;
+  // });
+  console.log(character) 
 
   // Se não tiver, seta como null para notificar que não existe
   if(!character) {
-    return {
+    return { 
       props: {
         character: null
       }
@@ -564,11 +568,14 @@ function Sheet({
                   {
                     character.attributes.map((each, index) => (
                       <Grid item xs={2} key={index}>
-                        <SheetEditableRow image="/assets/dice.png"
+                        <SheetEditableRow 
+                          avaliableSkills= {character.skills}
+                          image="/assets/dice.png"
                           data={{
                             name: each.attribute.name,
                             value: each.value,
-                            description: each.attribute.description
+                            description: each.attribute.description,
+                            skill_id: each.attribute.skill_id
                           }}
                           onValueChange={newValue => {
                             api.put('/character/attribute', {

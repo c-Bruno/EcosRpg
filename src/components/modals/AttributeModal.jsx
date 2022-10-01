@@ -6,11 +6,12 @@ import {
 } from '@mui/material'
 
 import { toast, ToastContainer } from 'react-toastify';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+
 import { api } from '../../utils';
-
-const styles = theme => ({
-
-})
 
 function AttributeModal({
     classes,
@@ -18,11 +19,13 @@ function AttributeModal({
 
     onSubmit,
     data,
-    operation
+    operation,
+    attributeSkill 
 }) {
     const [attribute, setAttribute] = useState({
         name: '',
-        description: ''
+        description: '',
+        skill_id: ''
     });
 
     useEffect(() => {
@@ -32,14 +35,16 @@ function AttributeModal({
 
         setAttribute({
             name: data.name,
-            description: data.description
+            description: data.description,
+            skill_id: data.skill_id
         });
     }, [data]);
     
     const resetState = () => {
         return setAttribute({
             name: '',
-            description: ''
+            description: '', 
+            skill_id: ''
         });
     }
 
@@ -80,6 +85,12 @@ function AttributeModal({
         }
     }
 
+    const [age, setAge] = React.useState('');
+
+    const handleChange = (event) => {
+      setAge(event.target.value);
+    };
+
     return (
         <Dialog
             open={true}
@@ -93,6 +104,7 @@ function AttributeModal({
             <DialogContent>
                 <Grid container spacing={3}>
                     <Grid item xs={12}>
+                        {/* Nome do atributo */}
                         <TextField
                             style={{
                                 marginTop: '15px'
@@ -116,7 +128,9 @@ function AttributeModal({
                             spellCheck={false}
                         />
                     </Grid>
+
                     <Grid item xs={12}>
+                        {/* Descrição do atributo */}
                         <TextField
                             style={{
                                 marginTop: '15px'
@@ -141,6 +155,34 @@ function AttributeModal({
                             spellCheck={false}
                         />
                     </Grid>
+
+                    <Grid item xs={12}>
+                        <FormControl fullWidth>
+                            <InputLabel id="demo-simple-select-label">Perícia</InputLabel>
+                            <Select
+                                labelId="skill_id"
+                                id="skill_id"
+                                value={attribute.skill_id}
+                                label="Perícia"
+                                onChange={
+                                    // handleChange
+                                    ({ target }) => {
+                                        const value = target.value;
+    
+                                        setAttribute(prevState => ({
+                                            ...prevState,
+                                            skill_id: value
+                                        }));
+                                    }
+                                }
+                                >
+
+                                {attributeSkill.map((skill, index) => (
+                                    <MenuItem value={skill.id}>{skill.name}</MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
+                    </Grid>
                 </Grid>
             </DialogContent>
             <DialogActions>
@@ -159,5 +201,9 @@ function AttributeModal({
         </Dialog>
     )
 }
+
+const styles = theme => ({
+
+}) 
 
 export default withStyles(styles)(AttributeModal);

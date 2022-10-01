@@ -153,6 +153,7 @@ function Dashboard({
     <AttributeModal
       handleClose={close}
       data={custom.data || null}
+      attributeSkill ={skills}
       onSubmit={() => {
         window.location.reload(false);
       }}

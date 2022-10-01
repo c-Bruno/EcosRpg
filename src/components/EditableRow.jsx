@@ -31,7 +31,7 @@ const EditableRow = ({
                 </Grid>
 
                 {/* Peso do item no inventario */}
-                {data.inventory ? (
+                {data.inventory && (
                     <Grid item md={2} xs={12}>
                         <TextField
                             disabled 
@@ -40,7 +40,7 @@ const EditableRow = ({
                             fullWidth
                         />
                     </Grid>
-                ): ( console.log("Não possui peso"))}
+                )}
 
                 {/* Remover Item */}
                 <Grid item md={2} xs={6}>

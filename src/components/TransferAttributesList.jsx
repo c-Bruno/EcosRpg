@@ -9,13 +9,18 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import Checkbox from '@mui/material/Checkbox';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
+import { api } from '../utils';
 
 function not(a, b) {
   return a.filter((value) => b.indexOf(value) === -1);
 }
 
 function intersection(a, b) {
-  return a.filter((value) => b.indexOf(value) !== -1);
+  return a.filter((value) => b.map((item) => {
+    if (item.name){
+        item.name.indexOf(value) !== -1
+    }
+  }))
 }
 
 function union(a, b) {
@@ -23,14 +28,20 @@ function union(a, b) {
 }
 
 export default function TransferAttributesList(props) {
-    console.log(props.attributes)
-    console.log(props.skills)
+    // console.log(props.attributes)
+    // console.log(props.skills)
 
     const [checked, setChecked] = React.useState([]);
     // Cria uma lista com todos os atributos que ainda não foram agrupados
-    const [UngroupedAttributes, setLeft] = React.useState(props.attributes.map((attribute, index) => {
-        return attribute.name;
+    const [UngroupedAttributes, setLeft] = React.useState(props.attributes.filter(attribute => !attribute.skill_id).map((attribute, index) => {
+        return {
+            id: attribute.id,
+            name: attribute.name,
+            description: attribute.description,
+            skill_id: attribute.skill_id
+        };
     }));
+
     const [right, setRight] = React.useState(["Charme", "Medicina", "Natação", "Religião"]);
 
     const leftChecked = intersection(checked, UngroupedAttributes);
@@ -53,16 +64,41 @@ export default function TransferAttributesList(props) {
 
     const handleToggleAll = (items) => () => {
         if (numberOfChecked(items) === items.length) {
-        setChecked(not(checked, items));
+            setChecked(not(checked, items));
         } else {
-        setChecked(union(checked, items));
+            setChecked(union(checked, items));
         }
     };
 
-    const handleCheckedRight = () => {
-        setRight(right.concat(leftChecked));
-        setLeft(not(UngroupedAttributes, leftChecked));
-        setChecked(not(checked, leftChecked));
+    const changeList = (skill) => {
+        console.log(skill)
+    }
+
+    const handleCheckedRight = () => {        
+        var attributeToUpdate, dividedItem
+        leftChecked.map((item, index) => (
+            dividedItem = item.split(' - '),
+
+            // Atribui o novo valor de skill para os atributos necessarios
+            attributeToUpdate = UngroupedAttributes.filter(attribute => attribute.id == dividedItem[0]).map((itemUngroupeded) => {
+                itemUngroupeded.skill_id = 4;
+                return itemUngroupeded;
+            }),
+
+            console.log(attributeToUpdate)
+            // api.put(`/attribute/${item.split(' - ')[0]}`, UngroupedAttributes)
+            //     .then(() => {
+            //         // Callback
+            //         window.location.reload(false);
+            //     })
+            //     .catch(err => {
+            //         toast.error('Erro ao atribuir pericia!');
+            //     })
+        ))
+        console.log(leftChecked)
+        // setRight(right.concat(leftChecked));
+        // setLeft(not(UngroupedAttributes, leftChecked));
+        // setChecked(not(checked, leftChecked));
     };
 
     const handleCheckedLeft = () => {
@@ -73,62 +109,64 @@ export default function TransferAttributesList(props) {
 
     const customList = (title, items) => (
         <Card>
-        <CardHeader
-            sx={{ px: 2, py: 1 }}
-            avatar={
-                <Checkbox
-                    onClick={handleToggleAll(items)}
-                    checked={numberOfChecked(items) === items.length && items.length !== 0}
-                    indeterminate={
-                    numberOfChecked(items) !== items.length && numberOfChecked(items) !== 0
-                    }
-                    disabled={items.length === 0}
-                    inputProps={{
-                    'aria-label': 'todos os itens selecionados',
-                    }}
-                />
-            }
-            title={title}
-            subheader={`${numberOfChecked(items)}/${items.length} selecionado`}
-        />
-        <Divider />
-        <List
-            sx={{
-            width: 300,
-            height: 230,
-            bgcolor: 'background.paper',
-            overflow: 'auto',
-            }}
-            dense
-            component="div"
-            role="list"
-        >
-            {items.map((value) => {
-            const labelId = `transfer-list-all-item-${value}-label`;
+            <CardHeader
+                sx={{ px: 2, py: 1, mx: 0.5,
+                    fontSize: 10 }}
+                // avatar={
+                    // <Checkbox
+                    //     onClick={handleToggleAll(items)}
+                    //     checked={numberOfChecked(items) === items.length && items.length !== 0}
+                    //     indeterminate={
+                    //     numberOfChecked(items) !== items.length && numberOfChecked(items) !== 0
+                    //     }
+                    //     disabled={items.length === 0}
+                    //     inputProps={{
+                    //     'aria-label': 'todos os itens selecionados',
+                    //     }}
+                    // />
+                // }
+                title={title}
+                // subheader={`${numberOfChecked(items)}/${items.length} selecionado`}
+                subheader= {`${items.length} no total`}
+            />
+            <Divider />
+            <List
+                sx={{
+                width: 300,
+                height: 230,
+                bgcolor: 'background.paper',
+                overflow: 'auto',
+                }}
+                dense
+                component="div"
+                role="list"
+            >
+                {items.map((value) => {
+                const labelId = `transfer-list-all-item-${value}-label`;
 
-            return (
-                <ListItem
-                    key={value}
-                    role="listitem"
-                    button
-                    onClick={handleToggle(value)}
-                    >
-                    <ListItemIcon>
-                        <Checkbox
-                        checked={checked.indexOf(value) !== -1}
-                        tabIndex={-1}
-                        disableRipple
-                        inputProps={{
-                            'aria-labelledby': labelId,
-                        }}
-                        />
-                    </ListItemIcon>
-                    <ListItemText id={labelId} primary={value} />
-                </ListItem>
-            );
-            })}
-            <ListItem />
-        </List>
+                return (
+                    <ListItem
+                        key={value}
+                        role="listitem"
+                        // button
+                        // onClick={handleToggle(value)}
+                        >
+                        {/* <ListItemIcon> */}
+                            {/* <Checkbox
+                                checked={checked.indexOf(value) !== -1}
+                                tabIndex={-1}
+                                disableRipple
+                                inputProps={{
+                                    'aria-labelledby': labelId,
+                                }}
+                            /> */}
+                        {/* </ListItemIcon> */}
+                        <ListItemText id={labelId} primary={value} />
+                    </ListItem>
+                );
+                })}
+                <ListItem />
+            </List>
         </Card>
     );
 
@@ -136,23 +174,14 @@ export default function TransferAttributesList(props) {
         <Grid container spacing={2} justifyContent="center" alignItems="center">
             {/* Primeira lista com atributos não classificados */}
             <Grid item>
-                {customList('Não classificadas', UngroupedAttributes)}
+                {customList('Não classificadas', UngroupedAttributes.map(item => {
+                    return item.id + " - " + item.name;
+                }))}
             </Grid>
 
             {/* Botões para manipular elementos através das listas */}
-            <Grid item>
+            {/* <Grid item>
                 <Grid container direction="column" alignItems="center">
-                    <Button
-                        sx={{ my: 0.5 }}
-                        variant="outlined"
-                        size="small"
-                        onClick={handleCheckedRight}
-                        disabled={leftChecked.length === 0}
-                        aria-label="mover selecionado"
-                    >
-                        &gt;
-                    </Button>
-
                     <Button
                         sx={{ my: 0.5 }}
                         variant="outlined"
@@ -163,13 +192,30 @@ export default function TransferAttributesList(props) {
                     >
                         &lt;
                     </Button>
-                </Grid>
-            </Grid>
 
-            {/* Lista de cada atributo por preicia */}
+                    {(props.skills).map((skill) => (
+                        <Button
+                            sx={{ my: 0.5 }}
+                            variant="outlined"
+                            size="small"
+                            onClick={changeList(skill.id)}
+                            disabled={ leftChecked.length === 0 }
+                            aria-label="mover selecionado"
+                        >
+                           { skill.name } &gt;
+                        </Button>
+                    ))}
+                </Grid>
+            </Grid> */}
+
+            {/* Lista de cada atributo agrupada por preicia */}
             {(props.skills).map((skill) => (
-                <Grid item key={skill.id}>
-                    { customList(skill.name, right) }
+                <Grid item key={ skill.id }>
+                    { customList(skill.name, props.attributes.filter(attribute => attribute.skill_id == skill.id).map((attribute, index) => { 
+                        return [
+                            attribute.id + ' - ' + attribute.name,
+                        ]; 
+                    }))}
                 </Grid> 
             ))}
         </Grid>

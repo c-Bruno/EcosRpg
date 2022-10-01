@@ -45,7 +45,9 @@ const SheetEditableRow = ({
     data,
     image,
     onValueChange,
-    onInput
+    onInput,
+
+    avaliableSkills
 }) => {
     // console.log(data)
     const infoModal = useModal(({ close }) => (
@@ -62,6 +64,8 @@ const SheetEditableRow = ({
             // character={character}
             atribute={data.name}
             valueAtribute={data.value}
+            skillAttibute={data.skill_id}
+            avaliableSkills={avaliableSkills}
             onDiceRoll={rollData => {
                 const parsedData = {
                 character_id: character.id,
