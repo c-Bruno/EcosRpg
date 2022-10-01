@@ -85,12 +85,6 @@ function AttributeModal({
         }
     }
 
-    const [age, setAge] = React.useState('');
-
-    const handleChange = (event) => {
-      setAge(event.target.value);
-    };
-
     return (
         <Dialog
             open={true}
@@ -165,7 +159,6 @@ function AttributeModal({
                                 value={attribute.skill_id}
                                 label="Perícia"
                                 onChange={
-                                    // handleChange
                                     ({ target }) => {
                                         const value = target.value;
     
@@ -178,7 +171,7 @@ function AttributeModal({
                                 >
 
                                 {attributeSkill.map((skill, index) => (
-                                    <MenuItem value={skill.id}>{skill.name}</MenuItem>
+                                    <MenuItem key={skill.id} value={skill.id}>{skill.name}</MenuItem>
                                 ))}
                             </Select>
                         </FormControl>

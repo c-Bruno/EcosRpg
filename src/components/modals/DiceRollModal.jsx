@@ -43,7 +43,6 @@ function DiceRollModal({
     var dicResultColor = {color: 'primary'} // Cor exibida na tela
 
     function rollDamage(amountDamage) {  
-        console.log(amountDamage)          
         const diceRandomNumber = rollDice(amountDamage)
         diceNumber = {number: diceRandomNumber}
 

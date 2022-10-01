@@ -30,8 +30,6 @@ function CombatModal({
     operation,
     character
 }) {
-    console.log(data)
-    console.log(character)
     // Definir dados do cabeçalho da tabela
     const columns = [
         { id: 'weapon', label: 'ARMA', minWidth: 150 },

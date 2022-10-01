@@ -28,9 +28,6 @@ function union(a, b) {
 }
 
 export default function TransferAttributesList(props) {
-    // console.log(props.attributes)
-    // console.log(props.skills)
-
     const [checked, setChecked] = React.useState([]);
     // Cria uma lista com todos os atributos que ainda não foram agrupados
     const [UngroupedAttributes, setLeft] = React.useState(props.attributes.filter(attribute => !attribute.skill_id).map((attribute, index) => {
@@ -83,22 +80,8 @@ export default function TransferAttributesList(props) {
             attributeToUpdate = UngroupedAttributes.filter(attribute => attribute.id == dividedItem[0]).map((itemUngroupeded) => {
                 itemUngroupeded.skill_id = 4;
                 return itemUngroupeded;
-            }),
-
-            console.log(attributeToUpdate)
-            // api.put(`/attribute/${item.split(' - ')[0]}`, UngroupedAttributes)
-            //     .then(() => {
-            //         // Callback
-            //         window.location.reload(false);
-            //     })
-            //     .catch(err => {
-            //         toast.error('Erro ao atribuir pericia!');
-            //     })
+            })
         ))
-        console.log(leftChecked)
-        // setRight(right.concat(leftChecked));
-        // setLeft(not(UngroupedAttributes, leftChecked));
-        // setChecked(not(checked, leftChecked));
     };
 
     const handleCheckedLeft = () => {
@@ -112,21 +95,7 @@ export default function TransferAttributesList(props) {
             <CardHeader
                 sx={{ px: 2, py: 1, mx: 0.5,
                     fontSize: 10 }}
-                // avatar={
-                    // <Checkbox
-                    //     onClick={handleToggleAll(items)}
-                    //     checked={numberOfChecked(items) === items.length && items.length !== 0}
-                    //     indeterminate={
-                    //     numberOfChecked(items) !== items.length && numberOfChecked(items) !== 0
-                    //     }
-                    //     disabled={items.length === 0}
-                    //     inputProps={{
-                    //     'aria-label': 'todos os itens selecionados',
-                    //     }}
-                    // />
-                // }
                 title={title}
-                // subheader={`${numberOfChecked(items)}/${items.length} selecionado`}
                 subheader= {`${items.length} no total`}
             />
             <Divider />
@@ -148,19 +117,7 @@ export default function TransferAttributesList(props) {
                     <ListItem
                         key={value}
                         role="listitem"
-                        // button
-                        // onClick={handleToggle(value)}
                         >
-                        {/* <ListItemIcon> */}
-                            {/* <Checkbox
-                                checked={checked.indexOf(value) !== -1}
-                                tabIndex={-1}
-                                disableRipple
-                                inputProps={{
-                                    'aria-labelledby': labelId,
-                                }}
-                            /> */}
-                        {/* </ListItemIcon> */}
                         <ListItemText id={labelId} primary={value} />
                     </ListItem>
                 );
@@ -178,35 +135,6 @@ export default function TransferAttributesList(props) {
                     return item.id + " - " + item.name;
                 }))}
             </Grid>
-
-            {/* Botões para manipular elementos através das listas */}
-            {/* <Grid item>
-                <Grid container direction="column" alignItems="center">
-                    <Button
-                        sx={{ my: 0.5 }}
-                        variant="outlined"
-                        size="small"
-                        onClick={handleCheckedLeft}
-                        disabled={rightChecked.length === 0}
-                        aria-label="mover selecionado"
-                    >
-                        &lt;
-                    </Button>
-
-                    {(props.skills).map((skill) => (
-                        <Button
-                            sx={{ my: 0.5 }}
-                            variant="outlined"
-                            size="small"
-                            onClick={changeList(skill.id)}
-                            disabled={ leftChecked.length === 0 }
-                            aria-label="mover selecionado"
-                        >
-                           { skill.name } &gt;
-                        </Button>
-                    ))}
-                </Grid>
-            </Grid> */}
 
             {/* Lista de cada atributo agrupada por preicia */}
             {(props.skills).map((skill) => (
