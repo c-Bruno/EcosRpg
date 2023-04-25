@@ -1,6 +1,6 @@
 datasource db {
   provider = "mysql"
-  url      = env("DB_PROVIDER_URL") // Para commit
+  url      = env("DB_PROVIDER_URL") 
 }
 
 generator client {
