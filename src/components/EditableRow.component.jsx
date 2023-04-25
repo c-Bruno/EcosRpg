@@ -1,18 +1,12 @@
-import React from "react";
-import { withStyles } from "@mui/styles";
 import { Delete as DeleteIcon, Create as EditIcon } from "@mui/icons-material";
+import { withStyles } from "@mui/styles";
+import React from "react";
 
-import { Grid, Button, TextField, Tooltip } from "@mui/material";
+import { Button, Grid, TextField, Tooltip } from "@mui/material";
 
 const styles = (theme) => ({});
 
-const EditableRow = ({
-  classes,
-  data,
-
-  editRow,
-  deleteRow,
-}) => {
+const EditableRow = ({ data, editRow, classes, deleteRow }) => {
   return (
     <div className={classes.root}>
       {/* Inventario do personagem */}

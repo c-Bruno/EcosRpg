@@ -1,17 +1,16 @@
-import React from "react";
-import { withStyles } from "@mui/styles";
 import { Button } from "@mui/material";
+import { withStyles } from "@mui/styles";
+import React from "react";
 
 import Image from "next/image";
 
 import {
-  Link as LinkIcon,
   Delete as DeleteIcon,
   Favorite as HeartIcon,
   FavoriteBorder as HeartIconNoLife,
-  VideoCameraFront as CameraIcon,
+  Link as LinkIcon,
   Chair as SanityIcon,
-  ChairAltOutlined as SanityIconEmpty,
+  ChairAltOutlined as SanityIconEmpty
 } from "@mui/icons-material";
 
 import useModal from "../hooks/useModal";

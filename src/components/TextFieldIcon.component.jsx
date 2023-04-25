@@ -1,23 +1,23 @@
-import React from "react";
-import { withStyles } from "@mui/styles";
 import {
-  InputLabel,
-  OutlinedInput,
   FilledInput,
+  FormControl,
+  IconButton,
   Input,
   InputAdornment,
-  IconButton,
-  FormControl,
+  InputLabel,
+  OutlinedInput,
 } from "@mui/material";
+import { withStyles } from "@mui/styles";
+import React from "react";
 
 const styles = (theme) => ({});
 
 const TextFieldIcon = ({
-  classes,
-  variant,
-  label,
   type,
   Icon,
+  label,
+  classes,
+  variant,
   fullWidth,
   onClickIcon,
   ...props

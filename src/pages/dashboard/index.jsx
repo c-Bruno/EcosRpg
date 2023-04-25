@@ -1,28 +1,28 @@
-import React, { useEffect, useState } from "react";
+import { Add as AddIcon } from "@mui/icons-material";
+import { Button, Container, Grid } from "@mui/material";
+import { withStyles } from "@mui/styles";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { withStyles } from "@mui/styles";
-import { Grid, Container, Button, TextField } from "@mui/material";
-import { Add as AddIcon } from "@mui/icons-material";
+import React, { useEffect, useState } from "react";
 
 import {
-  Header,
   AddBox,
-  Section,
-  EditableRow,
   CharacterBox,
+  EditableRow,
+  Header,
+  Section,
   TransferAttributesList,
 } from "../../components";
 
 import {
-  SkillModal,
   AttributeModal,
   ConfirmationModal,
   CreateCharacterModal,
+  SkillModal,
 } from "../../components/modals";
 
-import { api } from "../../utils";
 import useModal from "../../hooks/useModal";
+import { api } from "../../utils";
 
 import { prisma } from "../../database";
 

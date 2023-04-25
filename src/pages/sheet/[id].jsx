@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
-import Head from "next/head";
-import Image from "next/image";
-import { useRouter } from "next/router";
 import { Add as AddIcon } from "@mui/icons-material";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
+import Head from "next/head";
+import Image from "next/image";
+import { useRouter } from "next/router";
+import React, { useEffect, useState } from "react";
 
-import { Grid, Container, Button, TextField, Tooltip } from "@mui/material";
+import { Button, Container, Grid, TextField, Tooltip } from "@mui/material";
 import { withStyles } from "@mui/styles";
 
 import { api } from "../../utils";
@@ -14,27 +14,27 @@ import { api } from "../../utils";
 import socket from "../../utils/socket";
 
 import {
+  EditableRow,
   Header,
   Section,
-  StatusBar,
   SheetEditableRow,
+  StatusBar,
   TableBox,
-  EditableRow,
 } from "../../components";
 
 import {
-  CombatModal,
-  DiceRollModal,
-  StatusBarModal,
-  InventoryModal,
-  ConfirmationModal,
   ChangePictureModal,
+  CombatModal,
+  ConfirmationModal,
+  DiceRollModal,
+  InventoryModal,
+  StatusBarModal,
 } from "../../components/modals";
 
 import { CharacterInfoForm } from "../../components/forms";
 
+import { toast } from "react-toastify";
 import useModal from "../../hooks/useModal";
-import { toast, ToastContainer } from "react-toastify";
 
 import { prisma } from "../../database";
 

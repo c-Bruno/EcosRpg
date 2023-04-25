@@ -1,15 +1,13 @@
-import React from "react";
 import { withStyles } from "@mui/styles";
 import Image from "next/image";
+import React from "react";
 
-import { Grid, TextField, Alert } from "@mui/material";
-import { toast, ToastContainer } from "react-toastify";
-import { render } from "react-dom";
+import { Grid, TextField } from "@mui/material";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 
 import useModal from "../hooks/useModal";
-
-import { InfoModal, DiceRollModal } from "./modals";
+import { DiceRollModal, InfoModal } from "./modals";
 
 const styles = (theme) => ({
   name: {
@@ -41,12 +39,11 @@ const styles = (theme) => ({
 });
 
 const SheetEditableRow = ({
-  classes,
   data,
   image,
-  onValueChange,
   onInput,
-
+  classes,
+  onValueChange,
   avaliableSkills,
 }) => {
   const infoModal = useModal(({ close }) => (

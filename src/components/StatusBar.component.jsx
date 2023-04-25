@@ -1,4 +1,4 @@
-import { LinearProgress, Box, Typography } from "@mui/material";
+import { Box, LinearProgress, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 
 function LinearProgressWithLabel(props) {
@@ -41,12 +41,12 @@ function LinearProgressWithLabel(props) {
 }
 
 const StatusBar = ({
-  label,
   max,
+  label,
   current,
+  onClick,
   primaryColor,
   secondaryColor,
-  onClick,
 }) => {
   const normalise = (current, max) => ((current - 0) * 100) / (max - 0);
 

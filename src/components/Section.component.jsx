@@ -1,8 +1,8 @@
-import React from "react";
-import Image from "next/image";
 import { withStyles } from "@mui/styles";
+import Image from "next/image";
+import React from "react";
 
-import { Grid, Container, Button, TextField } from "@mui/material";
+import { Button } from "@mui/material";
 
 const styles = (theme) => ({
   root: {
@@ -33,12 +33,11 @@ const styles = (theme) => ({
 });
 
 const Section = ({
-  children,
-  classes,
-  title,
-  subtitle,
   image,
-
+  title,
+  classes,
+  children,
+  subtitle,
   renderButton,
 }) => {
   return (
