@@ -1,1 +1,1 @@
-web: npm i && npm start
+web: yarn i && yarn start
