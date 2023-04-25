@@ -73,7 +73,7 @@ function CombatModal({
       total_load: data.total_load,
       character_id: character,
     });
-  }, [data]);
+  }, [character, data]);
 
   const resetState = () => {
     return setCombat({
