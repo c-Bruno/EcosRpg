@@ -1,57 +1,26 @@
-import Header from './Header'
-import Section from './Section'
-import CharacterBox from './CharacterBox'
-import AddBox from './AddBox'
-import TransferAttributesList from './TransferAttributesList'
+import Header from "./Header.component";
+import Section from "./Section.component";
+import CharacterBox from "./CharacterBox.component";
+import AddBox from "./AddBox.component";
+import TransferAttributesList from "./TransferAttributesList.component";
 
-import CreateCharacterModal from './modals/CreateCharacterModal'
-import ConfirmationModal from './modals/ConfirmationModal'
-import AttributeModal from './modals/AttributeModal'
-import CombatModal from './modals/CombatModal'
-import InventoryModal from './modals/InventoryModal'
-import SkillModal from './modals/SkillModal'
-import StatusBarModal from './modals/StatusBarModal'
-import InfoModal from './modals/InfoModal'
-import GeneratePortraitModal from './modals/GeneratePortraitModal'
-import DiceRollModal from './modals/DiceRollModal'
-import ChangePictureModal from './modals/ChangePictureModal'
-
-import EditableRow from './EditableRow'
-import SheetEditableRow from './SheetEditableRow'
-import TableBox from './TableBox'
-
-import Loader from './Loader'
-
-import StatusBar from './StatusBar'
-
-import TextFieldIcon from './TextFieldIcon'
+import EditableRow from "./EditableRow.component";
+import SheetEditableRow from "./SheetEditableRow.component";
+import TableBox from "./TableBox.component";
+import Loader from "./Loader.component";
+import StatusBar from "./StatusBar.component";
+import TextFieldIcon from "./TextFieldIcon.component";
 
 export {
-    Header,
-    Section,
-    CharacterBox,
-    AddBox,
-    TransferAttributesList,
-
-    CreateCharacterModal,
-    ConfirmationModal,
-    AttributeModal,
-    CombatModal,
-    InventoryModal,
-    SkillModal,
-    StatusBarModal,
-    InfoModal,
-    GeneratePortraitModal,
-    DiceRollModal,
-    ChangePictureModal,
-
-    EditableRow,
-    TableBox,
-    Loader,
-
-    StatusBar,
-
-    SheetEditableRow,
-
-    TextFieldIcon
-}
+  AddBox,
+  Header,
+  Loader,
+  Section,
+  TableBox,
+  StatusBar,
+  EditableRow,
+  CharacterBox,
+  TextFieldIcon,
+  SheetEditableRow,
+  TransferAttributesList,
+};

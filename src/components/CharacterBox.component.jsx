@@ -1,8 +1,8 @@
-import React from 'react';
-import { withStyles } from '@mui/styles';
-import { Button } from '@mui/material';
+import React from "react";
+import { withStyles } from "@mui/styles";
+import { Button } from "@mui/material";
 
-import Image from 'next/image';
+import Image from "next/image";
 
 import {
   Link as LinkIcon,
@@ -11,73 +11,75 @@ import {
   FavoriteBorder as HeartIconNoLife,
   VideoCameraFront as CameraIcon,
   Chair as SanityIcon,
-  ChairAltOutlined as SanityIconEmpty
-} from '@mui/icons-material';
+  ChairAltOutlined as SanityIconEmpty,
+} from "@mui/icons-material";
 
-import useModal from '../hooks/useModal';
+import useModal from "../hooks/useModal";
 
-import GeneratePortraitModal from './modals/GeneratePortraitModal';
+import GeneratePortraitModal from "./modals/GeneratePortraitModal.component";
 
 const styles = (theme) => ({
   root: {
     background: theme.palette.primary[900],
-    borderRadius: '5px',
-    padding: '15px',
-    width: '100%',
-    display: 'flex',
-    alignItems: 'center',
-    minHeight: '121px',
-    gap: '20px',
+    borderRadius: "5px",
+    padding: "15px",
+    width: "100%",
+    display: "flex",
+    alignItems: "center",
+    minHeight: "121px",
+    gap: "20px",
   },
 
   characterImage: {
-    width: '75px',
-    borderRadius: '50%',
+    width: "75px",
+    borderRadius: "50%",
   },
 
   characterName: {
-    fontSize: '18px',
-    fontWeight: 'bold',
-    marginTop: '8px',
+    fontSize: "18px",
+    fontWeight: "bold",
+    marginTop: "8px",
   },
 
   hpInfo: {
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
 
   mainInformations: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'start',
-    flexDirection: 'column',
-    gap: '10px',
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "start",
+    flexDirection: "column",
+    gap: "10px",
   },
 
   btn: {
     width: 40,
     height: 40,
     minWidth: 40,
-    borderRadius: '5px'
+    borderRadius: "5px",
   },
 });
 
 function CharacterBox({ classes, character, deleteCharacter, ...rest }) {
   const getCharacterPictureURL = () => {
-    if(!character) {
+    if (!character) {
       return null;
     }
 
-    if(character.standard_character_picture_url && character.injured_character_picture_url) {
-      if(character.current_hit_points > (character.max_hit_points / 2)) {
+    if (
+      character.standard_character_picture_url &&
+      character.injured_character_picture_url
+    ) {
+      if (character.current_hit_points > character.max_hit_points / 2) {
         return character.standard_character_picture_url;
-      }
-      else {
+      } else {
         return character.injured_character_picture_url;
       }
     } else {
-      return `/assets/character.png`
+      return `/assets/character.png`;
     }
-  }
+  };
 
   const generatePortraitModal = useModal(({ close, custom }) => (
     <GeneratePortraitModal
@@ -97,19 +99,21 @@ function CharacterBox({ classes, character, deleteCharacter, ...rest }) {
       />
       <div className={classes.mainInformations}>
         {/* Nome do personagem */}
-        <span className={classes.characterName}>{character.name} (ID: {character.id})</span>
+        <span className={classes.characterName}>
+          {character.name} (ID: {character.id})
+        </span>
 
         <div>
           {/* Vida resumida */}
           <div
             style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              color: '#E80A67',
-              gap: '3px',
-              float: 'left',
-              marginRight: "10px"
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              color: "#E80A67",
+              gap: "3px",
+              float: "left",
+              marginRight: "10px",
             }}
           >
             {character.current_hit_points === 0 ? (
@@ -121,21 +125,21 @@ function CharacterBox({ classes, character, deleteCharacter, ...rest }) {
               {character.current_hit_points}/{character.max_hit_points}
             </span>
           </div>
-            
+
           {/* Sanidade Resumida resumida */}
           <div
             style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              color: '#1e45b6',
-              gap: '3px',
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              color: "#1e45b6",
+              gap: "3px",
             }}
           >
             {character.current_sanity_points === 0 ? (
-              <SanityIconEmpty/>
+              <SanityIconEmpty />
             ) : (
-              <SanityIcon/>
+              <SanityIcon />
             )}
             <span className={classes.hpInfo}>
               {character.current_sanity_points}/{character.max_sanity_points}
@@ -145,11 +149,11 @@ function CharacterBox({ classes, character, deleteCharacter, ...rest }) {
 
         <div
           style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: '10px',
-            marginTop: '10px'
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "10px",
+            marginTop: "10px",
           }}
         >
           {/* Adicionar novo personagem */}

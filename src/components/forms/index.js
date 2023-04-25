@@ -1,4 +1,4 @@
-import CharacterInfoForm from "./CharacterInfoForm";
+import CharacterInfoForm from "./CharacterInfoForm.component";
 
 export {
     CharacterInfoForm
