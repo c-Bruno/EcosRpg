@@ -1,30 +1,33 @@
-import React, { useState, useEffect } from "react";
-import { withStyles } from "@mui/styles";
 import {
-  TextField,
+  Button,
   Dialog,
   DialogActions,
   DialogContent,
-  Grid,
   DialogTitle,
-  Button,
+  Grid,
+  TextField,
 } from "@mui/material";
-
-import { toast, ToastContainer } from "react-toastify";
+import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-
+import { withStyles } from "@mui/styles";
+import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import { api } from "../../utils";
 
-function AttributeModal({
-  classes,
-  handleClose,
+const styles = () => ({
+  inputAttributeInfos: {
+    marginTop: "15px",
+  },
+});
 
-  onSubmit,
+function AttributeModal({
   data,
+  classes,
+  onSubmit,
   operation,
+  handleClose,
   attributeSkill,
 }) {
   const [attribute, setAttribute] = useState({
@@ -101,9 +104,7 @@ function AttributeModal({
           <Grid item xs={12}>
             {/* Nome do atributo */}
             <TextField
-              style={{
-                marginTop: "15px",
-              }}
+              className={classes.inputAttributeInfos}
               autoFocus
               label="Nome"
               type="text"
@@ -125,9 +126,7 @@ function AttributeModal({
           <Grid item xs={12}>
             {/* Descrição do atributo */}
             <TextField
-              style={{
-                marginTop: "15px",
-              }}
+              className={classes.inputAttributeInfos}
               autoFocus
               label="Descrição"
               type="text"
@@ -183,7 +182,5 @@ function AttributeModal({
     </Dialog>
   );
 }
-
-const styles = (theme) => ({});
 
 export default withStyles(styles)(AttributeModal);

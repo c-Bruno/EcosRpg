@@ -1,34 +1,46 @@
+import { Button } from "@mui/material";
 import { withStyles } from "@mui/styles";
 import Image from "next/image";
 import React from "react";
 
-import { Button } from "@mui/material";
-
 const styles = (theme) => ({
   root: {
-    background: theme.palette.primary[600],
-    borderRadius: "3px",
+    height: "100%",
+    padding: "15px",
     border: "solid",
+    overflow: "auto",
+    borderRadius: "3px",
     borderWidth: "0.1px",
     borderColor: "#4e4e4e",
-    padding: "15px",
-    height: "100%",
-    overflow: "auto",
+    background: theme.palette.primary[600],
   },
+
   title: {
     color: theme.palette.primary.main,
-    // textTransform: 'uppercase',
-    margin: 0,
-    marginTop: "10px",
-    marginBottom: "10px",
-    marginLeft: "auto",
   },
+
   subtitle: {
     color: theme.palette.secondary.main,
+  },
+
+  textMargin: {
     margin: 0,
     marginTop: "10px",
-    marginBottom: "10px",
     marginLeft: "auto",
+    marginBottom: "10px",
+  },
+
+  textsAlign: {
+    textAlign: "center",
+  },
+
+  paddingBox: {
+    padding: "20px",
+  },
+
+  sectionButton: {
+    alignSelf: "center",
+    float: "right",
   },
 });
 
@@ -43,8 +55,8 @@ const Section = ({
   return (
     <div className={classes.root}>
       <div>
-        <div style={{ textAlign: "center" }}>
-          <h2 className={classes.title}>
+        <div className={classes.textsAlign}>
+          <h2 className={[classes.title, classes.textMargin]}>
             {title}
             {image ? (
               <Image
@@ -58,19 +70,19 @@ const Section = ({
             )}
 
             {renderButton && (
-              <Button style={{ alignSelf: "center", float: "right" }}>
+              <Button className={classes.sectionButton}>
                 {renderButton()}
               </Button>
             )}
           </h2>
 
-          <span style={{ textAlign: "center" }} className={classes.subtitle}>
+          <span className={[classes.subtitle, classes.textMargin, classes.textsAlign]}>
             {subtitle}
           </span>
         </div>
       </div>
 
-      <div style={{ padding: "20px" }}>{children}</div>
+      <div className={classes.paddingBox}>{children}</div>
     </div>
   );
 };

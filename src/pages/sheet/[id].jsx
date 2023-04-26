@@ -1,19 +1,13 @@
 import { Add as AddIcon } from "@mui/icons-material";
+import { Button, Container, Grid, TextField, Tooltip } from "@mui/material";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
+import { withStyles } from "@mui/styles";
 import Head from "next/head";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
-
-import { Button, Container, Grid, TextField, Tooltip } from "@mui/material";
-import { withStyles } from "@mui/styles";
-
-import { api } from "../../utils";
-import socket from "../../utils/socket";
-
-import * as CourseActions from '../../store/actions/sanity'
-
+import { toast } from "react-toastify";
 import {
   EditableRow,
   Header,
@@ -22,7 +16,7 @@ import {
   StatusBar,
   TableBox,
 } from "../../components";
-
+import { CharacterInfoForm } from "../../components/forms";
 import {
   ChangePictureModal,
   CombatModal,
@@ -31,13 +25,46 @@ import {
   InventoryModal,
   StatusBarModal,
 } from "../../components/modals";
-
-import { CharacterInfoForm } from "../../components/forms";
-
-import { toast } from "react-toastify";
-import useModal from "../../hooks/useModal.hook";
-
 import { prisma } from "../../database";
+import useModal from "../../hooks/useModal.hook";
+import { api } from "../../utils";
+import socket from "../../utils/socket";
+
+const styles = (theme) => ({
+  characterImage: {
+    width: "200px",
+    borderRadius: "50%",
+    cursor: "pointer",
+  },
+
+  alignCenter: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  bar: {
+    marginBottom: "2px",
+  },
+
+  barTitle: {
+    marginBottom: "2px",
+    color: theme.palette.secondary.main,
+    fontSize: "15px",
+    fontWeight: "bold",
+  },
+
+  dice: {
+    cursor: "pointer",
+    transition: "-webkit-transform .8s ease-in-out",
+    transform: "transform .8s ease-in-out",
+
+    "&:hover": {
+      transition: "rotate(360deg)",
+      transform: "rotate(360deg)",
+    },
+  },
+});
 
 export const getServerSideProps = async ({ params }) => {
   const characterId = isNaN(params.id) ? null : Number(params.id);
@@ -432,7 +459,7 @@ function Sheet({ classes, rawCharacter }) {
                         current={character.current_hit_points} // Vida Atual
                         max={character.max_hit_points} // Vida Total
                         label={`${character.current_hit_points}/${character.max_hit_points}`} // Valor exibido em tela
-                        primaryColor={`${"#640101"}`}
+                        primaryColor="#640101"
                         secondaryColor="#1b1517"
                         onClick={() => {
                           hitPointsModal.appear();
@@ -453,7 +480,7 @@ function Sheet({ classes, rawCharacter }) {
                         current={character.current_sanity_points} // Sanidade Atual
                         max={character.max_sanity_points} // Sanidade Total
                         label={`${character.current_sanity_points}/${character.max_sanity_points}`} // Valor exibido em tela
-                        primaryColor={`${"#011B64"}`}
+                        primaryColor="#011B64"
                         secondaryColor="#1b1517"
                         onClick={() => {
                           sanityPointsModal.appear();
@@ -477,11 +504,11 @@ function Sheet({ classes, rawCharacter }) {
                 {/* Dado para rolagem d100 */}
                 <Grid item xs={6} className={classes.alignCenter}>
                   <Image
-                    src={"/assets/dice.png"}
-                    alt="Dice roll"
-                    className={classes.dice}
                     width={80}
                     height={80}
+                    alt="Dice roll"
+                    src={"/assets/dice.png"}
+                    className={classes.dice}
                     onClick={() => diceRollModal.appear()}
                   />
                 </Grid>
@@ -747,42 +774,5 @@ function Sheet({ classes, rawCharacter }) {
     </Container>
   );
 }
-
-const styles = (theme) => ({
-  characterImage: {
-    width: "200px",
-    borderRadius: "50%",
-    cursor: "pointer",
-  },
-
-  alignCenter: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-
-  bar: {
-    marginBottom: "2px",
-  },
-
-  barTitle: {
-    marginBottom: "2px",
-    color: theme.palette.secondary.main,
-    // textTransform: 'uppercase',
-    fontSize: "15px",
-    fontWeight: "bold",
-  },
-
-  dice: {
-    cursor: "pointer",
-    transition: "-webkit-transform .8s ease-in-out",
-    transform: "transform .8s ease-in-out",
-
-    "&:hover": {
-      transition: "rotate(360deg)",
-      transform: "rotate(360deg)",
-    },
-  },
-});
 
 export default withStyles(styles)(Sheet);

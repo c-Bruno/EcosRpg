@@ -163,12 +163,8 @@ const CharacterInfoForm = ({ classes, initialValues, onSubmit }) => (
           </Grid>
 
           <Grid item xs={12}>
-            <div
-              style={{ float: "right", display: "flex", alignItems: "center" }}
-            >
-              {isSubmitting && (
-                <Loader size={30} style={{ marginRight: "10px" }} />
-              )}
+            <div className="save-button">
+              {isSubmitting && <Loader className="loader-save-button" />}
               <Button variant="contained" type="submit" disabled={isSubmitting}>
                 Salvar
               </Button>

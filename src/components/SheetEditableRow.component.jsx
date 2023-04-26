@@ -21,6 +21,11 @@ const styles = (theme) => ({
     fontWeight: "bold",
   },
 
+  marginAuto: {
+    marginLeft: "auto",
+    marginRight: "auto",
+  },
+
   dice: {
     cursor: "pointer",
     transition: "-webkit-transform .8s ease-in-out",
@@ -30,11 +35,6 @@ const styles = (theme) => ({
       transition: "rotate(360deg)",
       transform: "rotate(360deg)",
     },
-  },
-
-  marginAuto: {
-    marginLeft: "auto",
-    marginRight: "auto",
   },
 });
 
@@ -79,11 +79,11 @@ const SheetEditableRow = ({
         {/* Imagem do dado para rolagem no atributo */}
         <Grid item>
           <Image
-            src={image}
-            alt="Dice roll"
-            className={[classes.dice].join(" ")}
             width={40}
             height={40}
+            src={image}
+            alt="Dice roll"
+            className={classes.dice}
             onClick={() => {
               data.value
                 ? diceRollModal.appear()
@@ -120,7 +120,5 @@ const SheetEditableRow = ({
     </div>
   );
 };
-
-//render(<SheetEditableRow/>);
 
 export default withStyles(styles)(SheetEditableRow);

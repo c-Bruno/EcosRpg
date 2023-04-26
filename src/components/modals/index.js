@@ -1,14 +1,13 @@
-import CreateCharacterModal from "./CreateCharacterModal.component";
-import ConfirmationModal from "./ConfirmationModal.component";
 import AttributeModal from "./AttributeModal.component";
+import ChangePictureModal from "./ChangePictureModal.component";
 import CombatModal from "./CombatModal.component";
+import ConfirmationModal from "./ConfirmationModal.component";
+import CreateCharacterModal from "./CreateCharacterModal.component";
+import DiceRollModal from "./DiceRollModal.component";
+import InfoModal from "./InfoModal.component";
 import InventoryModal from "./InventoryModal.component";
 import SkillModal from "./SkillModal.component";
 import StatusBarModal from "./StatusBarModal.component";
-import InfoModal from "./InfoModal.component";
-import GeneratePortraitModal from "./GeneratePortraitModal.component";
-import DiceRollModal from "./DiceRollModal.component";
-import ChangePictureModal from "./ChangePictureModal.component";
 
 export {
   InfoModal,
@@ -21,5 +20,5 @@ export {
   ConfirmationModal,
   ChangePictureModal,
   CreateCharacterModal,
-  GeneratePortraitModal,
 };
+

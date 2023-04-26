@@ -1,14 +1,15 @@
+import AddBox from "./AddBox.component";
+import CharacterBox from "./CharacterBox.component";
 import Header from "./Header.component";
 import Section from "./Section.component";
-import CharacterBox from "./CharacterBox.component";
-import AddBox from "./AddBox.component";
 import TransferAttributesList from "./TransferAttributesList.component";
+import CreatureList from "./creatureList.component";
 
 import EditableRow from "./EditableRow.component";
-import SheetEditableRow from "./SheetEditableRow.component";
-import TableBox from "./TableBox.component";
 import Loader from "./Loader.component";
+import SheetEditableRow from "./SheetEditableRow.component";
 import StatusBar from "./StatusBar.component";
+import TableBox from "./TableBox.component";
 import TextFieldIcon from "./TextFieldIcon.component";
 
 export {
@@ -20,7 +21,9 @@ export {
   StatusBar,
   EditableRow,
   CharacterBox,
+  CreatureList,
   TextFieldIcon,
   SheetEditableRow,
   TransferAttributesList,
 };
+

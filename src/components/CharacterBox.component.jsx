@@ -1,32 +1,26 @@
-import { Button } from "@mui/material";
-import { withStyles } from "@mui/styles";
-import React from "react";
-
-import Image from "next/image";
-
 import {
   Delete as DeleteIcon,
   Favorite as HeartIcon,
   FavoriteBorder as HeartIconNoLife,
   Link as LinkIcon,
   Chair as SanityIcon,
-  ChairAltOutlined as SanityIconEmpty
+  ChairAltOutlined as SanityIconEmpty,
 } from "@mui/icons-material";
-
-import useModal from "../hooks/useModal.hook";
-
-import GeneratePortraitModal from "./modals/GeneratePortraitModal.component";
+import { Button } from "@mui/material";
+import { withStyles } from "@mui/styles";
+import Image from "next/image";
+import React from "react";
 
 const styles = (theme) => ({
   root: {
-    background: theme.palette.primary[900],
-    borderRadius: "5px",
-    padding: "15px",
+    gap: "20px",
     width: "100%",
     display: "flex",
-    alignItems: "center",
+    padding: "15px",
     minHeight: "121px",
-    gap: "20px",
+    borderRadius: "5px",
+    alignItems: "center",
+    background: theme.palette.primary[900],
   },
 
   characterImage: {
@@ -36,8 +30,26 @@ const styles = (theme) => ({
 
   characterName: {
     fontSize: "18px",
-    fontWeight: "bold",
     marginTop: "8px",
+    fontWeight: "bold",
+  },
+
+  characterLife: {
+    gap: "3px",
+    float: "left",
+    display: "flex",
+    color: "#E80A67",
+    marginRight: "10px",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  characterSanity: {
+    gap: "3px",
+    display: "flex",
+    color: "#1e45b6",
+    alignItems: "center",
+    justifyContent: "center",
   },
 
   hpInfo: {
@@ -45,11 +57,11 @@ const styles = (theme) => ({
   },
 
   mainInformations: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "start",
-    flexDirection: "column",
     gap: "10px",
+    display: "flex",
+    alignItems: "start",
+    justifyContent: "center",
+    flexDirection: "column",
   },
 
   btn: {
@@ -57,6 +69,14 @@ const styles = (theme) => ({
     height: 40,
     minWidth: 40,
     borderRadius: "5px",
+  },
+
+  boxButtons: {
+    gap: "10px",
+    display: "flex",
+    marginTop: "10px",
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
 
@@ -80,13 +100,6 @@ function CharacterBox({ classes, character, deleteCharacter, ...rest }) {
     }
   };
 
-  const generatePortraitModal = useModal(({ close, custom }) => (
-    <GeneratePortraitModal
-      handleClose={close}
-      characterId={custom.characterId}
-    />
-  ));
-
   return (
     <div className={classes.root} {...rest}>
       <Image
@@ -104,17 +117,7 @@ function CharacterBox({ classes, character, deleteCharacter, ...rest }) {
 
         <div>
           {/* Vida resumida */}
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              color: "#E80A67",
-              gap: "3px",
-              float: "left",
-              marginRight: "10px",
-            }}
-          >
+          <div className={classes.characterLife}>
             {character.current_hit_points === 0 ? (
               <HeartIconNoLife />
             ) : (
@@ -126,15 +129,7 @@ function CharacterBox({ classes, character, deleteCharacter, ...rest }) {
           </div>
 
           {/* Sanidade Resumida resumida */}
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              color: "#1e45b6",
-              gap: "3px",
-            }}
-          >
+          <div className={classes.characterSanity}>
             {character.current_sanity_points === 0 ? (
               <SanityIconEmpty />
             ) : (
@@ -146,15 +141,7 @@ function CharacterBox({ classes, character, deleteCharacter, ...rest }) {
           </div>
         </div>
 
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: "10px",
-            marginTop: "10px",
-          }}
-        >
+        <div className={classes.boxButtons}>
           {/* Adicionar novo personagem */}
           <div>
             <Button
@@ -166,7 +153,7 @@ function CharacterBox({ classes, character, deleteCharacter, ...rest }) {
               <LinkIcon />
             </Button>
           </div>
-          
+
           {/* Deletar personagem */}
           <div>
             <Button

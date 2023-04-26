@@ -37,18 +37,13 @@ const styles = (theme) => ({
 });
 
 function DiceRollModal({
-  classes,
-  handleClose,
-
   amount,
+  classes,
   atribute,
+  handleClose,
   valueAtribute,
   skillAttibute,
   avaliableSkills,
-
-  character,
-  onDiceRoll,
-  characterId,
 }) {
   var diceNumber = { number: "" }; // Numero da rolagem de dado
   var diceTypeResult = { description: "" }; // Resultado obtido(Extremo, Sucesso Bom, Sucesso Normal, Fracasso, Fracasso extremo)
@@ -76,13 +71,13 @@ function DiceRollModal({
     }
 
     setTimeout(() => {
-      //   setTimeout(() => {
-      //     diceModal.css('display', 'none')
-      //     $('#diceNumber').text('')
-      //     $('#diceType').text('')
-      //     $('.modalDice').css('transform', 'rotate(0deg)')
-      //     $('.modalDice').css('-webkit-transform', 'rotate(0deg)')
-      //   }, 20000)
+        setTimeout(() => {
+          diceModal.css('display', 'none')
+          $('#diceNumber').text('')
+          $('#diceType').text('')
+          $('.modalDice').css('transform', 'rotate(0deg)')
+          $('.modalDice').css('-webkit-transform', 'rotate(0deg)')
+        }, 20000)
     }, 2000);
   }
 
@@ -232,14 +227,6 @@ function DiceRollModal({
         <Button onClick={handleClose} color="secondary">
           Fechar
         </Button>
-        {/* <Button
-                    onClick={() => {
-                        return rollDamage('1d100')
-                    }}
-                    disabled={buttonDisabled}
-                >
-                    {result ? 'Rolar Outro Dado' : 'Rolar'}
-                </Button> */}
       </DialogActions>
     </Dialog>
   );

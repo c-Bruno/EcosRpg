@@ -10,7 +10,6 @@ import {
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import Paper from "@mui/material/Paper";
-import { useTheme } from "@mui/material/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -19,16 +18,14 @@ import TableFooter from "@mui/material/TableFooter";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
+import { useTheme } from "@mui/material/styles";
 import Image from "next/image";
 import PropTypes from "prop-types";
 import * as React from "react";
+import { toast } from "react-toastify";
 import useModal from "../hooks/useModal.hook";
 import { api } from "../utils";
-import { DiceRollModal } from "./modals";
-
-import { CombatModal, ConfirmationModal } from "./modals";
-
-import { toast } from "react-toastify";
+import { CombatModal, ConfirmationModal, DiceRollModal } from "./modals";
 function TablePaginationActions(props) {
   const theme = useTheme();
   const { count, page, rowsPerPage, onPageChange } = props;

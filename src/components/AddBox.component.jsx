@@ -4,16 +4,16 @@ import React from "react";
 
 const styles = (theme) => ({
   root: {
-    background: theme.palette.primary[900],
-    borderRadius: "3px",
-    padding: "15px",
     width: "100%",
+    height: "100%",
     display: "flex",
-    justifyContent: "center",
+    padding: "15px",
+    cursor: "pointer",
+    borderRadius: "3px",
     alignItems: "center",
     flexDirection: "column",
-    height: "100%",
-    cursor: "pointer",
+    justifyContent: "center",
+    background: theme.palette.primary[900],
   },
 
   icon: {
