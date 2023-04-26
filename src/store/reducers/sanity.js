@@ -21,7 +21,7 @@ const INITIAL_STATE = {
     ],
   };
   
-export default  function course(state = INITIAL_STATE, action) {
+export default  function sanity(state = INITIAL_STATE, action) {
     if (action.type === "TOGGLE_LESSON") {
       return {
         ...state,

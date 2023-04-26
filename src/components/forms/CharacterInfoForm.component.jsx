@@ -8,16 +8,16 @@ import Loader from "../Loader.component";
 const CharacterInfoForm = ({ classes, initialValues, onSubmit }) => (
   <Formik
     initialValues={{
-      name: initialValues.name,
-      player_name: initialValues.player_name,
       age: initialValues.age,
-      gender: initialValues.gender,
-      weight: initialValues.weight,
-      occupation: initialValues.occupation,
-      birth: initialValues.birth,
-      birthplace: initialValues.birthplace,
+      name: initialValues.name,
       fear: initialValues.fear,
+      birth: initialValues.birth,
+      weight: initialValues.weight,
+      gender: initialValues.gender,
+      birthplace: initialValues.birthplace,
       background: initialValues.background,
+      occupation: initialValues.occupation,
+      player_name: initialValues.player_name,
     }}
     onSubmit={(values, { setSubmitting }) => {
       onSubmit(values).then(() => setSubmitting(false));
@@ -31,12 +31,12 @@ const CharacterInfoForm = ({ classes, initialValues, onSubmit }) => (
           {/* Nome do jogador*/}
           <Grid item xs={12}>
             <TextField
-              variant="standard"
-              label="Nome do jogador(a)"
-              name="player_name"
-              value={values.player_name}
               fullWidth
+              name="player_name"
+              variant="standard"
               onChange={handleChange}
+              label="Nome do jogador(a)"
+              value={values.player_name}
               error={errors.player_name}
             />
           </Grid>
@@ -44,66 +44,66 @@ const CharacterInfoForm = ({ classes, initialValues, onSubmit }) => (
           {/* Nome do personagem */}
           <Grid item xs={12}>
             <TextField
-              variant="standard"
-              label="Nome"
-              name="name"
-              value={values.name}
               fullWidth
-              onChange={handleChange}
+              name="name"
+              label="Nome"
+              variant="standard"
+              value={values.name}
               error={errors.name}
+              onChange={handleChange}
             />
           </Grid>
 
           {/* Idade */}
           <Grid item xs={6}>
             <TextField
+              fullWidth
               name="age"
-              label="Idade"
               type="number"
+              label="Idade"
               variant="standard"
               value={values.age}
-              fullWidth
-              onChange={handleChange}
               error={errors.age}
+              onChange={handleChange}
             />
           </Grid>
 
           {/* Genero */}
           <Grid item xs={6}>
             <TextField
+              fullWidth
               name="gender"
               label="Gênero"
               variant="standard"
               value={values.gender}
-              fullWidth
-              onChange={handleChange}
               error={errors.gender}
+              onChange={handleChange}
             />
           </Grid>
 
           {/* Peso */}
           <Grid item xs={6}>
             <TextField
+              fullWidth
               label="Peso"
-              name="weight"
               type="number"
+              name="weight"
               variant="standard"
               value={values.weight}
-              fullWidth
-              onChange={handleChange}
               error={errors.weight}
+              onChange={handleChange}
             />
           </Grid>
 
           {/* Profissão */}
           <Grid item xs={6}>
             <TextField
-              variant="standard"
+              fullWidth
               label="Profissão"
               name="occupation"
-              value={values.occupation}
-              fullWidth
+              variant="standard"
               onChange={handleChange}
+              value={values.occupation}
               error={errors.occupation}
             />
           </Grid>
@@ -111,25 +111,25 @@ const CharacterInfoForm = ({ classes, initialValues, onSubmit }) => (
           {/* Quando nasceu */}
           <Grid item xs={6}>
             <TextField
-              variant="standard"
-              label="Quando nasceu"
-              name="birth"
-              value={values.birth}
               fullWidth
-              onChange={handleChange}
+              name="birth"
+              variant="standard"
+              value={values.birth}
               error={errors.birth}
+              label="Quando nasceu"
+              onChange={handleChange}
             />
           </Grid>
 
           {/* Onde nasceu */}
           <Grid item xs={6}>
             <TextField
+              fullWidth
+              name="birthplace"
               variant="standard"
               label="Onde nasceu"
-              name="birthplace"
-              value={values.birthplace}
-              fullWidth
               onChange={handleChange}
+              value={values.birthplace}
               error={errors.birthplace}
             />
           </Grid>
@@ -137,27 +137,27 @@ const CharacterInfoForm = ({ classes, initialValues, onSubmit }) => (
           {/* Maior medo */}
           <Grid item xs={12}>
             <TextField
+              fullWidth
+              name="fear"
               variant="standard"
               label="Maior medo"
-              name="fear"
               value={values.fear}
-              fullWidth
-              onChange={handleChange}
               error={errors.fear}
+              onChange={handleChange}
             />
           </Grid>
 
           {/* Background do personagem */}
           <Grid item xs={12}>
             <TextField
-              variant="standard"
               multiline
-              maxRows={4}
-              label="Sobre o personagem"
-              name="background"
-              value={values.background}
               fullWidth
+              maxRows={4}
+              name="background"
+              variant="standard"
               onChange={handleChange}
+              label="Sobre o personagem"
+              value={values.background}
               error={errors.background}
             />
           </Grid>

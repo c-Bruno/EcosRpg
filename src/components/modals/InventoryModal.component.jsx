@@ -42,7 +42,7 @@ function InventoryModal({
       weight: data.inventory.weight,
       character_id: character,
     });
-  }, [character, data]);
+  }, [data]);
 
   const resetState = () => {
     return setInventory({

@@ -12,6 +12,8 @@ import { withStyles } from "@mui/styles";
 import { api } from "../../utils";
 import socket from "../../utils/socket";
 
+import * as CourseActions from '../../store/actions/sanity'
+
 import {
   EditableRow,
   Header,
@@ -158,7 +160,6 @@ function Sheet({ classes, rawCharacter }) {
         .put(`/character/${character.id}`, data)
         .then(() => {
           updateCharacterState(data);
-
           resolve();
 
           socket.emit("update_hit_points", {
@@ -169,7 +170,6 @@ function Sheet({ classes, rawCharacter }) {
         })
         .catch((err) => {
           toast.error(`Erro ao atualizar a sanidade!`, err);
-
           reject();
         });
     });

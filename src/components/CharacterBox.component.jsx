@@ -166,18 +166,7 @@ function CharacterBox({ classes, character, deleteCharacter, ...rest }) {
               <LinkIcon />
             </Button>
           </div>
-
-          {/* Configuração OBS */}
-          {/* <div>
-            <Button
-              variant="outlined"
-              className={classes.btn}
-              onClick={() => generatePortraitModal.appear({ characterId: character.id })}
-            >
-              <CameraIcon />
-            </Button>
-          </div> */}
-
+          
           {/* Deletar personagem */}
           <div>
             <Button

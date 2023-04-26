@@ -1,12 +1,13 @@
-import React from "react";
-import { ThemeProvider } from "@mui/material/styles";
 import { CssBaseline } from "@mui/material";
+import { ThemeProvider } from "@mui/material/styles";
+import React from "react";
 
-import theme from "../themes/Default.theme";
 import { ModalProvider } from "../contexts/ModalContext";
+import theme from "../themes/Default.theme";
+import "../themes/global.scss";
 
-import store from "../store";
 import { Provider } from "react-redux";
+import store from "../store";
 
 function MyApp({ Component, pageProps }) {
   React.useEffect(() => {
