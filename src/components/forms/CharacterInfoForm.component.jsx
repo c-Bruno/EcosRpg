@@ -57,10 +57,10 @@ const CharacterInfoForm = ({ classes, initialValues, onSubmit }) => (
           {/* Idade */}
           <Grid item xs={6}>
             <TextField
+              name="age"
+              label="Idade"
               type="number"
               variant="standard"
-              label="Idade"
-              name="age"
               value={values.age}
               fullWidth
               onChange={handleChange}
@@ -71,9 +71,9 @@ const CharacterInfoForm = ({ classes, initialValues, onSubmit }) => (
           {/* Genero */}
           <Grid item xs={6}>
             <TextField
-              variant="standard"
-              label="Gênero"
               name="gender"
+              label="Gênero"
+              variant="standard"
               value={values.gender}
               fullWidth
               onChange={handleChange}
@@ -84,9 +84,10 @@ const CharacterInfoForm = ({ classes, initialValues, onSubmit }) => (
           {/* Peso */}
           <Grid item xs={6}>
             <TextField
-              variant="standard"
               label="Peso"
               name="weight"
+              type="number"
+              variant="standard"
               value={values.weight}
               fullWidth
               onChange={handleChange}
@@ -94,7 +95,7 @@ const CharacterInfoForm = ({ classes, initialValues, onSubmit }) => (
             />
           </Grid>
 
-          {/* Profeissão */}
+          {/* Profissão */}
           <Grid item xs={6}>
             <TextField
               variant="standard"

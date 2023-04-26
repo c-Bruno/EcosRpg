@@ -21,7 +21,7 @@ import {
   SkillModal,
 } from "../../components/modals";
 
-import useModal from "../../hooks/useModal";
+import useModal from "../../hooks/useModal.hook";
 import { api } from "../../utils";
 
 import { prisma } from "../../database";

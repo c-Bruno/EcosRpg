@@ -6,7 +6,7 @@ import { Grid, TextField } from "@mui/material";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 
-import useModal from "../hooks/useModal";
+import useModal from "../hooks/useModal.hook";
 import { DiceRollModal, InfoModal } from "./modals";
 
 const styles = (theme) => ({

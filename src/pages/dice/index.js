@@ -1,3 +1,3 @@
-import Dice from "./Dice.page";
+import Dice from "./[id]";
 
 export { Dice };

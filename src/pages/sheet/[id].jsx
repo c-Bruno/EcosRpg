@@ -10,7 +10,6 @@ import { Button, Container, Grid, TextField, Tooltip } from "@mui/material";
 import { withStyles } from "@mui/styles";
 
 import { api } from "../../utils";
-
 import socket from "../../utils/socket";
 
 import {
@@ -34,7 +33,7 @@ import {
 import { CharacterInfoForm } from "../../components/forms";
 
 import { toast } from "react-toastify";
-import useModal from "../../hooks/useModal";
+import useModal from "../../hooks/useModal.hook";
 
 import { prisma } from "../../database";
 
@@ -399,7 +398,7 @@ function Sheet({ classes, rawCharacter }) {
   return (
     <Container style={{ marginBottom: "30px", maxWidth: "1400px" }}>
       <Head>
-        <title>{character.name}</title>
+        <title>{character.name} | RPG</title>
       </Head>
 
       <Grid container item spacing={3}>

@@ -1,14 +1,16 @@
-import React from 'react';
-import { ThemeProvider } from '@mui/material/styles';
-import { CssBaseline } from '@mui/material';
+import React from "react";
+import { ThemeProvider } from "@mui/material/styles";
+import { CssBaseline } from "@mui/material";
 
-import theme from '../theme'
-import { ModalProvider } from '../contexts/ModalContext';
+import theme from "../themes/Default.theme";
+import { ModalProvider } from "../contexts/ModalContext";
+
+import store from "../store";
+import { Provider } from "react-redux";
 
 function MyApp({ Component, pageProps }) {
-
   React.useEffect(() => {
-    const jssStyles = document.querySelector('#jss-server-side');
+    const jssStyles = document.querySelector("#jss-server-side");
     if (jssStyles) {
       jssStyles.parentElement.removeChild(jssStyles);
     }
@@ -16,14 +18,16 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <>
-      <ThemeProvider theme={theme}>
-        <ModalProvider>
-          <CssBaseline />
-          <Component {...pageProps} />
-        </ModalProvider>
-      </ThemeProvider>
+      <Provider store={store}>
+        <ThemeProvider theme={theme}>
+          <ModalProvider>
+            <CssBaseline />
+            <Component {...pageProps} />
+          </ModalProvider>
+        </ThemeProvider>
+      </Provider>
     </>
-  )
+  );
 }
 
-export default MyApp
+export default MyApp;

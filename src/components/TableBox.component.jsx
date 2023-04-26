@@ -22,7 +22,7 @@ import TableRow from "@mui/material/TableRow";
 import Image from "next/image";
 import PropTypes from "prop-types";
 import * as React from "react";
-import useModal from "../hooks/useModal";
+import useModal from "../hooks/useModal.hook";
 import { api } from "../utils";
 import { DiceRollModal } from "./modals";
 

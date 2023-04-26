@@ -1,3 +1,3 @@
-import Portrait from "./Portrait.page";
+import Portrait from "./[id]";
 
 export { Portrait };

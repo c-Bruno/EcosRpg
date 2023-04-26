@@ -1,18 +1,18 @@
-import { Backdrop } from '@mui/material';
-import { createContext, useState } from 'react';
+import { Backdrop } from "@mui/material";
+import { createContext, useState } from "react";
 
 export const ModalContext = createContext();
 
 function Modal({ component }) {
   return (
     <Backdrop
-      sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+      sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
       open={true}
       onClick={() => {}}
     >
       {component}
     </Backdrop>
-  )
+  );
 }
 
 export function ModalProvider({ children }) {
@@ -29,15 +29,15 @@ export function ModalProvider({ children }) {
 
     return {
       appear,
-      close
-    }
+      close,
+    };
   }
 
   return (
     <ModalContext.Provider value={modalFunction}>
       {children}
 
-      { modalComponent && <Modal component={modalComponent} />}
+      {modalComponent && <Modal component={modalComponent} />}
     </ModalContext.Provider>
-  )
-} 
+  );
+}

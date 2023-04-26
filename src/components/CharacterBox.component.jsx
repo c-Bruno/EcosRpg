@@ -13,7 +13,7 @@ import {
   ChairAltOutlined as SanityIconEmpty
 } from "@mui/icons-material";
 
-import useModal from "../hooks/useModal";
+import useModal from "../hooks/useModal.hook";
 
 import GeneratePortraitModal from "./modals/GeneratePortraitModal.component";
 
