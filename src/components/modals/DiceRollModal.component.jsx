@@ -71,13 +71,13 @@ function DiceRollModal({
     }
 
     setTimeout(() => {
-        setTimeout(() => {
-          diceModal.css('display', 'none')
-          $('#diceNumber').text('')
-          $('#diceType').text('')
-          $('.modalDice').css('transform', 'rotate(0deg)')
-          $('.modalDice').css('-webkit-transform', 'rotate(0deg)')
-        }, 20000)
+      //   setTimeout(() => {
+      //     diceModal.css('display', 'none')
+      //     $('#diceNumber').text('')
+      //     $('#diceType').text('')
+      //     $('.modalDice').css('transform', 'rotate(0deg)')
+      //     $('.modalDice').css('-webkit-transform', 'rotate(0deg)')
+      //   }, 20000)
     }, 2000);
   }
 
