@@ -3,7 +3,7 @@ import CharacterBox from "./CharacterBox.component";
 import Header from "./Header.component";
 import Section from "./Section.component";
 import TransferAttributesList from "./TransferAttributesList.component";
-import CreatureList from "./creatureList.component";
+import CreatureList from "./CreatureList.component";
 
 import EditableRow from "./EditableRow.component";
 import Loader from "./Loader.component";
